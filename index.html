@@ -1,1 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umut Ekin Demirkol - Portfolio</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
 
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            margin: 5px 0;
+            font-size: 1.1rem;
+            color: #ecf0f1;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        .item {
+            margin-bottom: 1.5rem;
+        }
+
+        .item:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .item-subtitle {
+            font-style: italic;
+            color: #666;
+        }
+
+        .item-date {
+            color: #888;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .skill-category {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .item-header {
+                flex-direction: column;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Umut Ekin Demirkol</h1>
+        <p>Control and Automation Engineer | R&D and Software Engineer</p>
+        <p>Istanbul, Türkiye | <a href="mailto:umutekindemirkol@gmail.com" style="color: #3498db;">umutekindemirkol@gmail.com</a></p>
+    </header>
+
+    <div class="container">
+        
+        <section id="education">
+            <h2>Education</h2>
+            <div class="item">
+                <div class="item-header">
+                    <span class="item-title">Yıldız Technical University</span>
+                    <span class="item-date">Sept. 2022 - Present</span>
+                </div>
+                <div class="item-subtitle">B.Sc. in Control and Automation Engineering (100% English)</div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2>Experience</h2>
+            
+            <div class="item">
+                <div class="item-header">
+                    <span class="item-title">GDS Engineering R&D</span>
+                    <span class="item-date">Jul. 2026 - Present</span>
+                </div>
+                <div class="item-subtitle">R&D and Software Engineer</div>
+                <ul>
+                    <li>Lead developer of the TÜBİTAK maritime energy efficiency project; built the physics engine of a real-time ship digital twin in Python against measured marine engine test data, streamed to a LabVIEW operator interface over UDP, and the voyage optimization layer scoring candidate routes on speed, fuel consumption and emissions.</li>
+                    <li>Sole developer of a real-time engine sound module in Python that generates the audio signal directly from live simulation state.</li>
+                </ul>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="item-title">Özdaş Mühendislik</span>
+                    <span class="item-date">Feb. 2026</span>
+                </div>
+                <div class="item-subtitle">Automation Engineer Intern</div>
+                <ul>
+                    <li>Built and wired industrial control panels, bridging theoretical control logic and physical application.</li>
+                    <li>Applied CiA 402 homing methods 23, 27 and 34 for mechanical referencing and optimized dynamic performance via servo drive and motor tuning using CODESYS over EtherCAT.</li>
+                </ul>
+            </div>
+
+            <div class="item">
+                <div class="item-header">
+                    <span class="item-title">Beijer Electronics</span>
+                    <span class="item-date">Jun. 2025 - Sept. 2025</span>
+                </div>
+                <div class="item-subtitle">Automation Engineer Intern</div>
+                <ul>
+                    <li>Programmed in CODESYS (IEC 61131-3) and designed HMI screens for the X2 Base series in iX Developer.</li>
+                    <li>Integrated industrial architectures via OPC UA, Modbus TCP/IP and BACnet, validating behavior in system simulation.</li>
+                    <li>Documented recurring HMI faults and their fixes into a troubleshooting reference published on Beijer's own forum, reaching 3,000+ users.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Projects</h2>
+            
+            <div class="item">
+                <div class="item-title">Vision-Based Detection & Control System</div>
+                <ul>
+                    <li>Trained a YOLOv8-Nano model (~6 MB) on a restructured two-class dataset for real-time inference; built a Python/OpenCV pipeline pulling the live camera feed over RTSP and running detection frame by frame.</li>
+                    <li>Modeling quadrotor flight dynamics in MATLAB & Simulink, comparing PID, nonlinear PID and LQR for stable, energy-optimal flight.</li>
+                </ul>
+            </div>
+
+            <div class="item">
+                <div class="item-title">Smart Factory Automation & SCADA System</div>
+                <ul>
+                    <li>Developing CODESYS control logic validated against a Factory I/O virtual production line, with an Ignition SCADA/HMI layer linked over MQTT and Modbus TCP/IP.</li>
+                </ul>
+            </div>
+
+            <div class="item">
+                <div class="item-title">Smart Home Automation & Energy Management System</div>
+                <ul>
+                    <li>Project Leader of an international collaboration: implemented industrial-grade CODESYS logic managing 400+ I/O points, interfaced with HOME I/O simulation for scenario validation.</li>
+                    <li>Designed the interface in iX Developer plus a custom web platform, with real-time exchange over Modbus TCP/IP and MQTT.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>Skills & Certifications</h2>
+            <div class="skills-grid">
+                <div>
+                    <span class="skill-category">Software & Tools:</span> CODESYS (IEC 61131-3), Python, C, MATLAB & Simulink, LabVIEW, iX Developer, Ignition SCADA, Factory I/O & HOME I/O, OpenCV & YOLO
+                </div>
+                <div>
+                    <span class="skill-category">Protocols & Hardware:</span> OPC UA, Modbus TCP/IP, EtherCAT, BACnet, MQTT, UDP, PLC & HMI Hardware, Servo Drives, ESP32
+                </div>
+                <div>
+                    <span class="skill-category">Languages:</span> Turkish (Native), English (C1 CEFR)
+                </div>
+                <div>
+                    <span class="skill-category">Courses:</span> Universal Robots Academy, LabVIEW Essentials, CODESYS Fundamentals & Simulation, McKinsey Forward Program
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>
