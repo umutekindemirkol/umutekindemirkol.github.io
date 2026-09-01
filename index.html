@@ -582,8 +582,7 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
         </div>
       </article>
 
-      <article class="job with-media">
-        <div>
+      <article class="job">
         <div class="job-top">
           <span class="job-role" data-tr="Otomasyon Mühendisi Stajyeri" data-en="Automation Engineer Intern">Otomasyon Mühendisi Stajyeri</span>
           <span class="job-when" data-tr="Şub. 2026" data-en="Feb. 2026">Şub. 2026</span>
@@ -599,23 +598,9 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
             Mekanik referanslama için CiA 402 homing metotları 23, 27 ve 34'ü uyguladım; EtherCAT üzerinden CODESYS ile servo sürücü ve motor ayarı yaparak dinamik performansı iyileştirdim.
           </li>
         </ul>
-        </div>
-
-        <div class="media-col single">
-          <div class="shot shot--video">
-            <video muted loop playsinline preload="metadata"
-                   poster="media/ozdas-pano-thumb.jpg" aria-label="Endüstriyel kontrol panosu, sinyal lambaları">
-              <source src="media/ozdas-pano.mp4" type="video/mp4">
-            </video>
-            <span class="play"><svg viewBox="0 0 10 10"><path d="M2 1l6 4-6 4z"/></svg></span>
-            <span class="tag-stock" data-tr="temsili" data-en="stock">temsili</span>
-            <span class="cap" data-tr="Endüstriyel kontrol panosu — saha seviyesi" data-en="Industrial control panel — field level">Endüstriyel kontrol panosu — saha seviyesi</span>
-          </div>
-        </div>
       </article>
 
-      <article class="job with-media">
-        <div>
+      <article class="job">
         <div class="job-top">
           <span class="job-role" data-tr="Otomasyon Mühendisi Stajyeri" data-en="Automation Engineer Intern">Otomasyon Mühendisi Stajyeri</span>
           <span class="job-when" data-tr="Haz. — Eyl. 2025" data-en="Jun. — Sept. 2025">Haz. — Eyl. 2025</span>
@@ -635,19 +620,6 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
             Tekrar eden HMI arızalarını ve çözümlerini bir sorun giderme rehberine dönüştürdüm; rehber Beijer'in kendi forumunda yayımlandı, <b>3.000'den fazla kullanıcıya</b> ulaştı ve satış ekibiyle paylaşıldı.
           </li>
         </ul>
-        </div>
-
-        <div class="media-col single">
-          <div class="shot shot--video">
-            <video muted loop playsinline preload="metadata"
-                   poster="media/beijer-hat-thumb.jpg" aria-label="Otomatik montaj hattı, pnömatik aktüatörler">
-              <source src="media/beijer-hat.mp4" type="video/mp4">
-            </video>
-            <span class="play"><svg viewBox="0 0 10 10"><path d="M2 1l6 4-6 4z"/></svg></span>
-            <span class="tag-stock" data-tr="temsili" data-en="stock">temsili</span>
-            <span class="cap" data-tr="Otomasyon hattı — HMI ve PLC katmanının kontrol ettiği süreç" data-en="Automation line — the process the HMI and PLC layer controls">Otomasyon hattı — HMI ve PLC katmanının kontrol ettiği süreç</span>
-          </div>
-        </div>
       </article>
 
     </div>
@@ -890,7 +862,6 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
       <article class="card">
         <div class="tile banner">
           <canvas data-scene="grid" aria-label="Şebeke frekansı ve birincil frekans kontrolü modeli" role="img"></canvas>
-          <span class="cap" data-tr="CIGRE'nin konusu — 50 Hz'i yerinde tutan birincil frekans kontrolü (model)" data-en="What CIGRE is about — primary frequency control holding 50 Hz (model)">CIGRE'nin konusu — 50 Hz'i yerinde tutan birincil frekans kontrolü (model)</span>
         </div>
         <div class="card-tags">
           <span class="tag t-amb" data-tr="Yönetim Kurulu Üyesi" data-en="Board Member">Yönetim Kurulu Üyesi</span>
@@ -904,6 +875,10 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
       </article>
 
       <article class="card">
+        <div class="tile banner">
+          <canvas data-scene="wind" aria-label="Rüzgar türbini ve güç üretimi simülasyonu" role="img"></canvas>
+          <span class="cap" data-tr="Rüzgar türbini güç üretimi (simülasyon)" data-en="Wind turbine power generation (simulation)">Rüzgar türbini güç üretimi (simülasyon)</span>
+        </div>
         <div class="card-tags">
           <span class="tag t-set" data-tr="Organizasyon Ekibi" data-en="Organization Team">Organizasyon Ekibi</span>
           <span class="tag t-sig">2024 — 2025</span>
@@ -1558,6 +1533,108 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
       g.fillText("droop R = 4%  ·  ölü bant ±20 mHz", padL, 29);
     }
 
+    /* ===== scene: wind turbine ===== */
+    var windSpeed = 8.0;
+    var rotorAngle = 0;
+    var powerKw = 0;
+    function drawWind(g, t, dt) {
+      dots(g);
+      // Rüzgar hızı simülasyonu (rastgele dalgalanma ve ortalamaya dönüş)
+      if (Math.random() < dt * 2.0) windSpeed += (Math.random() - 0.5) * 2.5;
+      windSpeed += (8.5 - windSpeed) * 0.02;
+      windSpeed = Math.max(3.0, Math.min(14.0, windSpeed));
+
+      // Güç eğrisi (rüzgar hızının küpüyle orantılı, 4 m/s cut-in)
+      var targetPower = 0;
+      if (windSpeed > 4.0) {
+        targetPower = Math.min(2500, Math.pow(windSpeed, 3) * 1.3);
+      }
+      powerKw += (targetPower - powerKw) * 0.05;
+
+      // Pervane dönüş hızı
+      rotorAngle += windSpeed * 0.3 * dt;
+      var cx = 130, cy = 100; // Türbin merkezi
+
+      // Rüzgar akış çizgileri animasyonu
+      g.strokeStyle = "rgba(76,201,240,.15)";
+      g.lineWidth = 1.5;
+      var windOff = (t * windSpeed * 15) % VW;
+      for (var wy = 30; wy < VH - 20; wy += 35) {
+        var wx = ((wy * 11 + windOff) % VW);
+        g.beginPath();
+        g.moveTo(wx, wy);
+        g.lineTo(wx + windSpeed * 3, wy);
+        g.stroke();
+      }
+
+      // Kule (Tower)
+      g.fillStyle = C.line;
+      g.beginPath();
+      g.moveTo(cx - 5, VH);
+      g.lineTo(cx + 5, VH);
+      g.lineTo(cx + 2, cy);
+      g.lineTo(cx - 2, cy);
+      g.fill();
+
+      // Pervaneler (Blades)
+      g.save();
+      g.translate(cx, cy);
+      g.rotate(rotorAngle);
+      g.fillStyle = C.muted;
+      for (var i = 0; i < 3; i++) {
+        g.rotate(Math.PI * 2 / 3);
+        g.beginPath();
+        g.moveTo(0, 0);
+        g.quadraticCurveTo(8, -25, 2, -65);
+        g.quadraticCurveTo(-4, -25, 0, 0);
+        g.fill();
+      }
+
+      // Göbek (Hub)
+      g.fillStyle = C.ink;
+      g.beginPath();
+      g.arc(0, 0, 4, 0, 6.284);
+      g.fill();
+      g.restore();
+
+      // --- Sol Üst Metin (Türbin Durumu) ---
+      var isGenerating = powerKw > 50;
+      g.textAlign = "left"; g.textBaseline = "top";
+      g.fillStyle = C.muted;
+      g.font = '400 9px "IBM Plex Mono", monospace';
+      g.fillText("TÜRBİN DURUMU", 12, 12);
+
+      g.fillStyle = isGenerating ? C.sig : C.amber;
+      g.fillText(isGenerating ? "ON-GRID (AKTİF)" : "BEKLEMEDE", 12, 24);
+
+      g.fillStyle = "#4a586e";
+      g.fillText("Cut-in: 4 m/s · Cut-out: 25 m/s", 12, 39);
+
+      // --- Sağ Üst Metin (Rüzgar Hızı ve Güç Metrikleri) ---
+      g.textAlign = "right"; g.textBaseline = "top";
+      // Rüzgar Hızı (m/s)
+      g.fillStyle = C.muted;
+      g.font = '400 9px "IBM Plex Mono", monospace';
+      g.fillText("RÜZGAR HIZI", VW - 12, 12);
+      g.fillStyle = C.sig;
+      g.font = '500 20px "IBM Plex Mono", monospace';
+      g.fillText(windSpeed.toFixed(1), VW - 32, 23);
+      g.fillStyle = C.muted;
+      g.font = '400 10px "IBM Plex Mono", monospace';
+      g.fillText("m/s", VW - 12, 31);
+
+      // Üretilen Güç (kW)
+      g.fillStyle = C.muted;
+      g.font = '400 9px "IBM Plex Mono", monospace';
+      g.fillText("ÜRETİLEN GÜÇ", VW - 12, 60);
+      g.fillStyle = isGenerating ? C.set : C.amber;
+      g.font = '500 20px "IBM Plex Mono", monospace';
+      g.fillText(Math.round(powerKw), VW - 26, 71);
+      g.fillStyle = C.muted;
+      g.font = '400 10px "IBM Plex Mono", monospace';
+      g.fillText("kW", VW - 12, 79);
+    }
+
     /* ===== shared loop ===== */
     var t0 = performance.now(), prev = t0, running = false, visible = [], lastT = 0;
 
@@ -1567,6 +1644,7 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
       var s = cv.getAttribute("data-scene");
       if (s === "detect") drawDetect(g, t);
       else if (s === "grid") drawGrid(g, t, dt);
+      else if (s === "wind") drawWind(g, t, dt);
       else drawLine(g, t, dt);
     }
 
