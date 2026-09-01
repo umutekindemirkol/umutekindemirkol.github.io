@@ -774,29 +774,256 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
   </div>
 </section>
 
-<!-- ============ STACK ============ -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teknoloji Yığını</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --bg:            #070b12;
+    --surface:       #10161f;
+    --surface-2:     #0c121b;
+    --border:        #1d2732;
+    --border-strong: #2c3a48;
+    --text:          #e7edf5;
+    --text-muted:    #8996a6;
+    --cyan:          #3fd7e0;
+    --cyan-dim:      #3fd7e033;
+    --purple:        #b48cf2;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Mono', ui-monospace, monospace;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* faint engineering-grid backdrop */
+  #stack{
+    position:relative;
+    padding:72px 24px 88px;
+    background-image:
+      linear-gradient(rgba(63,215,224,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(63,215,224,0.05) 1px, transparent 1px);
+    background-size:36px 36px;
+    background-position:center top;
+  }
+  #stack::before{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse 900px 500px at 50% 0%, rgba(7,11,18,0) 0%, var(--bg) 75%);
+    pointer-events:none;
+  }
+
+  .wrap{ position:relative; max-width:1180px; margin:0 auto; }
+
+  /* ---------- header ---------- */
+  .sec-head{ margin-bottom:48px; }
+  .sec-head-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:24px; }
+  .sec-head h2{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:clamp(28px, 3.4vw, 38px);
+    letter-spacing:-0.01em;
+    margin:0 0 14px;
+  }
+  .sec-head p{
+    font-family:'Space Grotesk', sans-serif;
+    color:var(--text-muted);
+    font-size:15.5px;
+    line-height:1.65;
+    max-width:640px;
+    margin:0 0 28px;
+  }
+  .sec-head hr{ border:none; border-top:1px solid var(--border); margin:0; }
+
+  .lang-toggle{
+    flex:0 0 auto;
+    display:flex;
+    border:1px solid var(--border-strong);
+    border-radius:7px;
+    overflow:hidden;
+    font-size:12px;
+  }
+  .lang-toggle button{
+    all:unset;
+    cursor:pointer;
+    padding:7px 14px;
+    color:var(--text-muted);
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:.03em;
+  }
+  .lang-toggle button.active{ background:var(--cyan-dim); color:var(--cyan); }
+  .lang-toggle button:not(.active):hover{ background:var(--surface-2); color:var(--text); }
+
+  /* ---------- layout ---------- */
+  .stack-layout{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:32px;
+    align-items:start;
+  }
+
+  /* ---------- pyramid column ---------- */
+  .pyramid-col{ position:relative; padding-left:30px; }
+
+  .axis{
+    position:absolute;
+    left:5px;
+    top:6px;
+    bottom:46px;
+    width:1px;
+    background:linear-gradient(to bottom, transparent, var(--border-strong) 8%, var(--border-strong) 92%, transparent);
+  }
+  .axis-dot{
+    position:absolute;
+    left:50%;
+    top:38%;
+    width:9px; height:9px;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:var(--cyan);
+    box-shadow:0 0 0 4px var(--cyan-dim), 0 0 14px 1px rgba(63,215,224,.7);
+  }
+
+  .layers{ display:flex; flex-direction:column; gap:16px; }
+
+  .layer-card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 24px;
+    display:flex;
+    align-items:center;
+    gap:28px;
+    flex-wrap:wrap;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+  }
+  /* connector tick from axis to card */
+  .layer-card::before{
+    content:"";
+    position:absolute;
+    left:-30px;
+    top:50%;
+    width:24px;
+    height:1px;
+    background:var(--border-strong);
+  }
+
+  .layer-info{
+    flex:0 0 auto;
+    min-width:188px;
+  }
+  .layer-info h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:16.5px;
+    font-weight:600;
+    margin:0 0 5px;
+    letter-spacing:-.005em;
+  }
+  .layer-info .sub-text{
+    display:block;
+    font-size:12px;
+    color:var(--text-muted);
+    letter-spacing:.01em;
+  }
+
+  .layer-tools{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    flex:1 1 auto;
+    border-left:1px solid var(--border);
+    padding-left:24px;
+    min-width:260px;
+  }
+  .tool{
+    font-size:12.5px;
+    color:var(--text);
+    background:var(--surface-2);
+    border:1px solid var(--border-strong);
+    border-radius:6px;
+    padding:6px 11px;
+    white-space:nowrap;
+    line-height:1.2;
+  }
+  .divider{
+    width:1px;
+    height:18px;
+    background:var(--border-strong);
+    margin:0 2px;
+    flex:0 0 auto;
+  }
+
+  .flow-text{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    margin-top:18px;
+    padding-left:0;
+    font-size:11.5px;
+    color:var(--text-muted);
+    letter-spacing:.02em;
+  }
+  .flow-text .arrow{ color:var(--cyan); margin-right:5px; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:860px){
+    .stack-layout{ grid-template-columns:1fr; }
+    .pyramid-col{ padding-left:26px; }
+    .layer-card{ flex-direction:column; align-items:flex-start; gap:14px; }
+    .layer-tools{ border-left:none; padding-left:0; }
+    .sec-head-top{ flex-direction:column; }
+  }
+  @media (max-width:480px){
+    #stack{ padding:52px 16px 64px; }
+    .tool{ font-size:11.5px; padding:5px 9px; }
+  }
+</style>
+</head>
+<body>
+
 <section id="stack">
   <div class="wrap">
+
     <div class="sec-head">
-      <h2 data-tr="Teknoloji Yığını" data-en="Tech Stack">Teknoloji Yığını</h2>
-      <p data-tr="Fiziksel dünyadan web arayüzlerine uzanan mimari: Donanım veri üretir, protokoller taşır, yazılım kontrol eder."
-         data-en="The architecture from physical world to web interfaces: Hardware generates data, protocols carry it, software controls it.">
-        Fiziksel dünyadan web arayüzlerine uzanan mimari: Donanım veri üretir, protokoller taşır, yazılım kontrol eder.
-      </p>
+      <div class="sec-head-top">
+        <div>
+          <h2 data-tr="Teknoloji Yığını" data-en="Tech Stack">Teknoloji Yığını</h2>
+          <p data-tr="Fiziksel dünyadan web arayüzlerine uzanan mimari: Donanım veri üretir, protokoller taşır, yazılım kontrol eder."
+             data-en="The architecture from physical world to web interfaces: Hardware generates data, protocols carry it, software controls it.">
+            Fiziksel dünyadan web arayüzlerine uzanan mimari: Donanım veri üretir, protokoller taşır, yazılım kontrol eder.
+          </p>
+        </div>
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" data-lang="tr" class="active">TR</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+      </div>
+      <hr>
     </div>
 
     <div class="stack-layout">
-      
+
       <!-- SOL TARAF: EKSEN VE KATMANLAR -->
       <div class="pyramid-col">
-        
-        <!-- Eksen Çizgisi -->
+
         <div class="axis" aria-hidden="true">
           <span class="axis-dot"></span>
         </div>
 
         <div class="layers">
-          
+
           <!-- ÜST KATMAN: Yazılım ve Kontrol -->
           <div class="layer-card layer-top">
             <div class="layer-info">
@@ -849,27 +1076,9 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
 
         </div>
 
-        <!-- Akış Yönü Metinleri -->
         <div class="flow-text">
-          <span><span class="arrow">↑</span> <span data-tr="veri yazılıma çıkar" data-en="data flows to software">veri yazılıma çıkar</span></span>
-          <span><span class="arrow">↓</span> <span data-tr="komut sahaya iner" data-en="command flows down">komut sahaya iner</span></span>
-        </div>
-      </div>
-
-      <!-- SAĞ TARAF: MODELLEME DİKEY BLOK -->
-      <div class="model-col">
-        <div class="layer-card vertical-card">
-          <div class="layer-info">
-            <h3 data-tr="Modelleme ve Doğrulama" data-en="Modeling &amp; Validation">Modelleme ve Doğrulama</h3>
-            <span class="sub-text" data-tr="tüm mimariye paralel" data-en="parallel to entire architecture">tüm mimariye paralel</span>
-          </div>
-          <div class="layer-tools stacked">
-            <span class="tool">MATLAB &amp; Simulink</span>
-            <span class="tool">Factory I/O</span>
-            <span class="tool">HOME I/O</span>
-            <span class="tool">OpenCV &amp; YOLO</span>
-            <span class="tool highlight">PID / LQR</span>
-          </div>
+          <span><span class="arrow">↑</span><span data-tr="veri yazılıma çıkar" data-en="data flows to software">veri yazılıma çıkar</span></span>
+          <span><span class="arrow">↓</span><span data-tr="komut sahaya iner" data-en="command flows down">komut sahaya iner</span></span>
         </div>
       </div>
 
@@ -877,6 +1086,25 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
   </div>
 </section>
 
+<script>
+  (function(){
+    var buttons = document.querySelectorAll('.lang-toggle button');
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var lang = btn.getAttribute('data-lang');
+        buttons.forEach(function(b){ b.classList.toggle('active', b === btn); });
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-tr]').forEach(function(el){
+          var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-tr');
+          if (val !== null) el.innerHTML = val;
+        });
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
 <!-- ============ BEYOND ============ -->
 <section id="disinda">
   <div class="wrap">
