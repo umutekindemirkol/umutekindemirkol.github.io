@@ -260,16 +260,29 @@ section{padding-bottom:var(--gap); position:relative; z-index:1}
 .band:nth-child(3){width:100%}
 .band-name{font-family:var(--display); font-weight:500; font-size:14.5px}
 .band-name small{display:block; font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:2px; letter-spacing:.02em}
-.chips{display:flex; flex-wrap:wrap; gap:7px}
+.chips{display:flex; flex-wrap:wrap; gap:7px; align-items:center}
 .chip{
   font-size:12.5px; color:var(--muted); background:var(--panel-2);
   border:1px solid var(--line-soft); border-radius:6px; padding:4px 10px;
 }
-.aside-block{
-  background:var(--panel); border:1px solid var(--line-soft); border-radius:11px;
-  padding:16px 20px; display:grid; grid-template-columns:172px 1fr; gap:18px; align-items:center;
+.chip-divider{
+  width:1px; height:20px; background:var(--line); align-self:center; margin:0 2px;
+  flex:none;
 }
-.aside-block .band-name{color:var(--setpoint)}
+
+/* ---------- pyramid + modeling column layout ---------- */
+.pyr-row{display:grid; grid-template-columns:1fr 236px; gap:22px; align-items:stretch; margin-bottom:20px}
+.model-col{
+  background:linear-gradient(180deg, var(--panel-2), var(--panel));
+  border:1px solid var(--line-soft); border-radius:11px;
+  padding:18px 17px; display:flex; flex-direction:column; gap:14px;
+}
+.model-col .band-name{color:var(--setpoint)}
+.model-col .chips{flex-direction:column; align-items:stretch; gap:8px}
+.model-col .chip{text-align:center}
+.model-col .chip.pid{color:var(--signal); border-color:rgba(76,201,240,.32)}
+.model-col .chip-sep{width:100%; height:1px; background:var(--line-soft); margin:2px 0}
+
 .certs{
   margin-top:22px; display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px;
 }
@@ -392,8 +405,11 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
   .job.with-media{grid-template-columns:1fr; gap:16px}
   .media-col{grid-template-columns:1fr 1fr}
   .media-col.single{max-width:320px}
-  .band, .aside-block{grid-template-columns:1fr; gap:11px}
+  .band{grid-template-columns:1fr; gap:11px}
   .band:nth-child(1), .band:nth-child(2), .band:nth-child(3){width:100%}
+  .pyr-row{grid-template-columns:1fr}
+  .model-col .chips{flex-direction:row; flex-wrap:wrap}
+  .model-col .chip-sep{display:none}
   .pyr-wrap{padding-left:22px}
   .flow{left:5px}
   .flow-note{margin-left:22px}
@@ -666,15 +682,10 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
             <span class="cap" data-tr="TEKNOFEST Mavi Vatan 2026" data-en="TEKNOFEST Mavi Vatan 2026">TEKNOFEST Mavi Vatan 2026</span>
           </button>
 
-          <div class="shot shot--video">
-            <video muted loop playsinline preload="metadata"
-                   poster="media/gds-gemi-thumb.jpg" aria-label="Konteyner gemisi, havadan görünüm">
-              <source src="media/gds-gemi.mp4" type="video/mp4">
-            </video>
-            <span class="play"><svg viewBox="0 0 10 10"><path d="M2 1l6 4-6 4z"/></svg></span>
-            <span class="tag-stock" data-tr="temsili" data-en="stock">temsili</span>
-            <span class="cap" data-tr="Sefer optimizasyonunun hedefi: yakıt ve emisyon" data-en="What voyage optimization targets: fuel and emissions">Sefer optimizasyonunun hedefi: yakıt ve emisyon</span>
-          </div>
+          <button class="shot" type="button" data-full="media/canli-ais-globe.png">
+            <img src="media/canli-ais-globe.png" width="720" height="450" loading="lazy" alt="Canlı AIS gemi trafiği dünya haritası görselleştirmesi">
+            <span class="zoom"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+          </button>
         </div>
       </article>
 
@@ -769,81 +780,79 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
       </p>
     </div>
 
-    <div class="pyr-wrap">
-      <div class="flow" aria-hidden="true">
-        <span class="flow-line"></span>
-        <span class="flow-dot up"></span>
-        <span class="flow-dot down"></span>
+    <div class="pyr-row">
+      <div class="pyr-wrap">
+        <div class="flow" aria-hidden="true">
+          <span class="flow-line"></span>
+          <span class="flow-dot up"></span>
+          <span class="flow-dot down"></span>
+        </div>
+        <div class="pyr">
+        <div class="band">
+          <div class="band-name">
+            <span data-tr="Denetim seviyesi" data-en="Supervisory level">Denetim seviyesi</span>
+            <small data-tr="izleme ve operatör" data-en="monitoring &amp; operator">izleme ve operatör</small>
+          </div>
+          <div class="chips">
+            <span class="chip">Ignition SCADA</span>
+            <span class="chip">iX Developer</span>
+            <span class="chip">LabVIEW</span>
+            <span class="chip-divider" aria-hidden="true"></span>
+            <span class="chip">OPC UA</span>
+            <span class="chip">MQTT</span>
+            <span class="chip">BACnet</span>
+          </div>
+        </div>
+        <div class="band">
+          <div class="band-name">
+            <span data-tr="Kontrol seviyesi" data-en="Control level">Kontrol seviyesi</span>
+            <small data-tr="mantık ve regülasyon" data-en="logic &amp; regulation">mantık ve regülasyon</small>
+          </div>
+          <div class="chips">
+            <span class="chip">CODESYS (IEC 61131-3)</span>
+            <span class="chip">Python</span>
+            <span class="chip">C</span>
+            <span class="chip-divider" aria-hidden="true"></span>
+            <span class="chip">Modbus TCP/IP</span>
+          </div>
+        </div>
+        <div class="band">
+          <div class="band-name">
+            <span data-tr="Saha seviyesi" data-en="Field level">Saha seviyesi</span>
+            <small data-tr="donanım ve tahrik" data-en="hardware &amp; actuation">donanım ve tahrik</small>
+          </div>
+          <div class="chips">
+            <span class="chip" data-tr="PLC &amp; HMI donanımı" data-en="PLC &amp; HMI hardware">PLC &amp; HMI donanımı</span>
+            <span class="chip" data-tr="Servo sürücüler" data-en="Servo drives">Servo sürücüler</span>
+            <span class="chip">ESP32</span>
+            <span class="chip-divider" aria-hidden="true"></span>
+            <span class="chip">EtherCAT</span>
+            <span class="chip">CiA 402</span>
+          </div>
+        </div>
       </div>
-      <div class="pyr">
-      <div class="band">
+      <p class="flow-note">
+        <span><i class="u">↑</i> <span data-tr="ölçüm yukarı çıkar" data-en="measurement flows up">ölçüm yukarı çıkar</span></span>
+        <span><i class="d">↓</i> <span data-tr="komut sahaya iner" data-en="command flows down">komut sahaya iner</span></span>
+      </p>
+      </div>
+
+      <div class="model-col">
         <div class="band-name">
-          <span data-tr="Denetim seviyesi" data-en="Supervisory level">Denetim seviyesi</span>
-          <small data-tr="izleme ve operatör" data-en="monitoring &amp; operator">izleme ve operatör</small>
+          <span data-tr="Modelleme ve doğrulama" data-en="Modeling &amp; validation">Modelleme ve doğrulama</span>
+          <small data-tr="piramidin her katmanına paralel" data-en="parallel to every layer">piramidin her katmanına paralel</small>
         </div>
         <div class="chips">
-          <span class="chip">Ignition SCADA</span>
-          <span class="chip">iX Developer</span>
-          <span class="chip">LabVIEW</span>
-          <span class="chip">OPC UA</span>
-          <span class="chip">MQTT</span>
-          <span class="chip">BACnet</span>
+          <span class="chip">MATLAB &amp; Simulink</span>
+          <span class="chip">Factory I/O</span>
+          <span class="chip">HOME I/O</span>
+          <span class="chip">OpenCV &amp; YOLO</span>
+          <span class="chip-sep" aria-hidden="true"></span>
+          <span class="chip pid">PID / LQR</span>
         </div>
       </div>
-      <div class="band">
-        <div class="band-name">
-          <span data-tr="Kontrol seviyesi" data-en="Control level">Kontrol seviyesi</span>
-          <small data-tr="mantık ve regülasyon" data-en="logic &amp; regulation">mantık ve regülasyon</small>
-        </div>
-        <div class="chips">
-          <span class="chip">CODESYS (IEC 61131-3)</span>
-          <span class="chip">Python</span>
-          <span class="chip">C</span>
-          <span class="chip">PID / LQR</span>
-          <span class="chip">Modbus TCP/IP</span>
-        </div>
-      </div>
-      <div class="band">
-        <div class="band-name">
-          <span data-tr="Saha seviyesi" data-en="Field level">Saha seviyesi</span>
-          <small data-tr="donanım ve tahrik" data-en="hardware &amp; actuation">donanım ve tahrik</small>
-        </div>
-        <div class="chips">
-          <span class="chip" data-tr="PLC &amp; HMI donanımı" data-en="PLC &amp; HMI hardware">PLC &amp; HMI donanımı</span>
-          <span class="chip" data-tr="Servo sürücüler" data-en="Servo drives">Servo sürücüler</span>
-          <span class="chip">EtherCAT</span>
-          <span class="chip">CiA 402</span>
-          <span class="chip">ESP32</span>
-        </div>
-      </div>
-    </div>
-    <p class="flow-note">
-      <span><i class="u">↑</i> <span data-tr="ölçüm yukarı çıkar" data-en="measurement flows up">ölçüm yukarı çıkar</span></span>
-      <span><i class="d">↓</i> <span data-tr="komut sahaya iner" data-en="command flows down">komut sahaya iner</span></span>
-    </p>
     </div>
 
-    <div class="aside-block">
-      <div class="band-name">
-        <span data-tr="Modelleme ve doğrulama" data-en="Modeling &amp; validation">Modelleme ve doğrulama</span>
-        <small data-tr="piramidin her katmanına paralel" data-en="parallel to every layer">piramidin her katmanına paralel</small>
-      </div>
-      <div class="chips">
-        <span class="chip">MATLAB &amp; Simulink</span>
-        <span class="chip">Factory I/O</span>
-        <span class="chip">HOME I/O</span>
-        <span class="chip">OpenCV &amp; YOLO</span>
-      </div>
-    </div>
-
-    <div class="certs">
-      <div class="cert"><b>Universal Robots Academy</b><span data-tr="e-Series Core &amp; Pro Track" data-en="e-Series Core &amp; Pro Track">e-Series Core &amp; Pro Track</span></div>
-      <div class="cert"><b>Elginkan Vakfı</b><span data-tr="Akıllı Röle ve Mikro PLC Programlama, 76 saat" data-en="Smart Relay &amp; Micro-Level PLC Programming, 76h">Akıllı Röle ve Mikro PLC Programlama, 76 saat</span></div>
-      <div class="cert"><b>CODESYS Fundamentals &amp; Simulation</b><span>Udemy</span></div>
-      <div class="cert"><b>LabVIEW Essentials</b><span>Udemy</span></div>
-      <div class="cert"><b>McKinsey Forward Program</b><span data-tr="Liderlik ve problem çözme" data-en="Leadership &amp; problem solving">Liderlik ve problem çözme</span></div>
-      <div class="cert"><b data-tr="Diller" data-en="Languages">Diller</b><span data-tr="Türkçe (ana dil) · İngilizce (C1)" data-en="Turkish (native) · English (C1)">Türkçe (ana dil) · İngilizce (C1)</span></div>
-    </div>
   </div>
 </section>
 
@@ -852,8 +861,8 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
   <div class="wrap">
     <div class="sec-head">
       <h2 data-tr="Mühendisliğin dışında" data-en="Beyond engineering">Mühendisliğin dışında</h2>
-      <p data-tr="Enerji sektörüne yönelik öğrenci topluluklarında 3 yıl boyunca aktif organizatör ve süreç yöneticisi olarak görev aldım."
-         data-en="Actively organized and managed operations for energy-focused student communities over a 3-year period.">
+      <p data-tr="Enerji sektörünün öğrenci topluluklarında üç yıl; katılımcı olarak değil, organizatör olarak."
+         data-en="Three years in the energy sector's student community — as an organizer, not an attendee.">
         Enerji sektörünün öğrenci topluluklarında üç yıl; katılımcı olarak değil, organizatör olarak.
       </p>
     </div>
@@ -877,7 +886,6 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
       <article class="card">
         <div class="tile banner">
           <canvas data-scene="wind" aria-label="Rüzgar türbini ve güç üretimi simülasyonu" role="img"></canvas>
-          <span class="cap" data-tr="Rüzgar türbini güç üretimi (simülasyon)" data-en="Wind turbine power generation (simulation)">Rüzgar türbini güç üretimi (simülasyon)</span>
         </div>
         <div class="card-tags">
           <span class="tag t-set" data-tr="Organizasyon Ekibi" data-en="Organization Team">Organizasyon Ekibi</span>
