@@ -1,244 +1,1633 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Umut Ekin Demirkol - Portfolio</title>
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --accent-color: #3498db;
-            --bg-color: #f8f9fa;
-            --text-color: #333;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Umut Ekin Demirkol — Kontrol ve Otomasyon Mühendisliği</title>
+<meta name="description" content="Yıldız Teknik Üniversitesi Kontrol ve Otomasyon Mühendisliği son sınıf öğrencisi. PLC, SCADA, dijital ikiz ve gerçek zamanlı kontrol sistemleri.">
+<meta name="author" content="Umut Ekin Demirkol">
 
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 3rem 1rem;
-        }
+<meta property="og:type" content="website">
+<meta property="og:title" content="Umut Ekin Demirkol — Kontrol ve Otomasyon Mühendisliği">
+<meta property="og:description" content="PLC mantığından dijital ikizlere, saha veri yolundan SCADA ekranına kadar kontrol zinciri.">
 
-        header h1 {
-            margin: 0 0 10px 0;
-            font-size: 2.5rem;
-        }
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23070b14'/%3E%3Cpath d='M4 24 L11 24 Q13 24 13 20 L13 11 Q13 8 16 8 L28 8' fill='none' stroke='%234cc9f0' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
 
-        header p {
-            margin: 5px 0;
-            font-size: 1.1rem;
-            color: #ecf0f1;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
+<style>
+:root{
+  --void:#070b14;
+  --panel:#0d1522;
+  --panel-2:#111c2e;
+  --line:#1e2c44;
+  --line-soft:#16223a;
+  --ink:#e8eef8;
+  --muted:#8b9cb6;
+  --signal:#4cc9f0;
+  --setpoint:#b07cf7;
+  --amber:#f2b544;
 
-        section {
-            background: white;
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
+  --display:"Space Grotesk", system-ui, sans-serif;
+  --body:"IBM Plex Sans", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, monospace;
 
-        h2 {
-            color: var(--accent-color);
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 0.5rem;
-            margin-top: 0;
-        }
+  --wrap:1120px;
+  --gap:clamp(64px, 9vw, 118px);
+}
 
-        .item {
-            margin-bottom: 1.5rem;
-        }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--void); color:var(--ink);
+  font-family:var(--body); font-size:16px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(760px 460px at 78% -6%, rgba(76,201,240,.13), transparent 62%),
+    radial-gradient(620px 420px at 6% 12%, rgba(176,124,247,.09), transparent 60%);
+}
+img{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--signal); outline-offset:3px; border-radius:4px}
 
-        .item:last-child {
-            margin-bottom: 0;
-        }
+.wrap{width:100%; max-width:var(--wrap); margin:0 auto; padding:0 24px; position:relative; z-index:1}
 
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 0.5rem;
-        }
+/* ---------- nav ---------- */
+.nav{
+  position:sticky; top:0; z-index:50;
+  background:rgba(7,11,20,.82); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line-soft);
+}
+.nav-in{display:flex; align-items:center; gap:20px; height:60px}
+.brand{
+  font-family:var(--display); font-weight:700; font-size:15.5px;
+  letter-spacing:-.01em; text-decoration:none; white-space:nowrap;
+}
+.brand span{color:var(--signal)}
+.nav-links{display:flex; gap:22px; margin-left:auto; align-items:center}
+.nav-links a{
+  color:var(--muted); text-decoration:none; font-size:14px; font-weight:500;
+  transition:color .15s;
+}
+.nav-links a:hover{color:var(--ink)}
+.lang{
+  display:flex; border:1px solid var(--line); border-radius:7px; overflow:hidden;
+  background:var(--panel);
+}
+.lang button{
+  background:none; border:0; color:var(--muted); cursor:pointer;
+  font-family:var(--mono); font-size:11.5px; font-weight:500;
+  padding:5px 9px; letter-spacing:.04em; transition:.15s;
+}
+.lang button[aria-pressed="true"]{background:var(--signal); color:#04121c}
+.nav-toggle{display:none}
 
-        .item-title {
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: var(--primary-color);
-        }
+/* ---------- hero ---------- */
+.hero{padding:clamp(52px,7vw,86px) 0 var(--gap)}
+.hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(34px,4.5vw,62px); align-items:center}
+.loc{
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:var(--mono); font-size:11.5px; color:var(--muted);
+  border:1px solid var(--line); border-radius:100px; padding:5px 13px;
+  background:var(--panel); margin-bottom:22px;
+}
+.dot{width:6px; height:6px; border-radius:50%; background:var(--signal); box-shadow:0 0 8px var(--signal)}
+h1{
+  font-family:var(--display); font-weight:700;
+  font-size:clamp(31px,4.3vw,50px); line-height:1.1; letter-spacing:-.025em;
+  margin:0 0 20px;
+}
+.lede{font-size:16.5px; color:var(--muted); max-width:56ch; margin:0 0 26px}
+.tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:30px}
+.tag{
+  font-size:12.5px; font-weight:500; padding:5px 12px; border-radius:100px;
+  border:1px solid; background:var(--panel);
+}
+.t-sig{color:var(--signal); border-color:rgba(76,201,240,.32)}
+.t-set{color:var(--setpoint); border-color:rgba(176,124,247,.32)}
+.t-amb{color:var(--amber); border-color:rgba(242,181,68,.3)}
+.cta-row{display:flex; flex-wrap:wrap; gap:11px}
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:11px 20px; border-radius:9px; font-size:14.5px; font-weight:600;
+  text-decoration:none; border:1px solid var(--line); transition:.16s;
+}
+.btn-solid{background:var(--signal); color:#04121c; border-color:var(--signal)}
+.btn-solid:hover{background:#6fd6f5; border-color:#6fd6f5}
+.btn-ghost{background:var(--panel); color:var(--ink)}
+.btn-ghost:hover{border-color:var(--signal); color:var(--signal)}
+.btn svg{width:15px; height:15px; flex:none}
 
-        .item-subtitle {
-            font-style: italic;
-            color: #666;
-        }
+/* ---------- scope panel (hero signature) ---------- */
+.scope{
+  background:linear-gradient(180deg, var(--panel-2), var(--panel));
+  border:1px solid var(--line); border-radius:14px; padding:18px;
+  box-shadow:0 24px 60px -30px rgba(0,0,0,.9);
+}
+.scope-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:4px}
+.scope-title{font-family:var(--display); font-weight:500; font-size:14.5px}
+.scope-sub{font-family:var(--mono); font-size:10.5px; color:var(--muted)}
+.plot{
+  position:relative; width:100%; aspect-ratio:16/10;
+  margin:12px 0 14px; border-radius:8px; overflow:hidden;
+  background:#060a12; border:1px solid var(--line-soft);
+}
+.plot canvas{display:block; width:100%; height:100%}
+.legend{display:flex; gap:16px; margin-bottom:14px; font-family:var(--mono); font-size:10.5px; color:var(--muted)}
+.legend i{display:inline-block; width:14px; height:2px; margin-right:6px; vertical-align:middle; border-radius:2px}
 
-        .item-date {
-            color: #888;
-            font-size: 0.9rem;
-            white-space: nowrap;
-        }
+.sliders{display:grid; gap:11px; margin-bottom:15px}
+.sl{display:grid; grid-template-columns:26px 1fr 46px; align-items:center; gap:11px}
+.sl label{font-family:var(--mono); font-size:12px; color:var(--muted)}
+.sl output{font-family:var(--mono); font-size:12px; color:var(--signal); text-align:right}
+input[type=range]{
+  -webkit-appearance:none; appearance:none; width:100%; height:3px;
+  background:var(--line); border-radius:3px; outline-offset:6px; cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:15px; height:15px; border-radius:50%;
+  background:var(--signal); border:2px solid var(--void); cursor:pointer;
+}
+input[type=range]::-moz-range-thumb{
+  width:13px; height:13px; border-radius:50%; border:2px solid var(--void);
+  background:var(--signal); cursor:pointer;
+}
+.metrics{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+  background:var(--line-soft); border:1px solid var(--line-soft); border-radius:9px; overflow:hidden;
+}
+.metric{background:var(--panel); padding:10px 11px}
+.metric .k{font-size:10.5px; color:var(--muted); display:block; margin-bottom:3px}
+.metric .v{font-family:var(--mono); font-size:16px; font-weight:500}
+.reset{
+  margin-top:11px; width:100%; background:none; border:1px dashed var(--line);
+  color:var(--muted); border-radius:8px; padding:7px; cursor:pointer;
+  font-family:var(--body); font-size:12.5px; transition:.15s;
+}
+.reset:hover{border-color:var(--signal); color:var(--signal)}
 
-        ul {
-            margin: 0;
-            padding-left: 1.2rem;
-        }
+/* ---------- sections ---------- */
+section{padding-bottom:var(--gap); position:relative; z-index:1}
+.sec-head{margin-bottom:34px; padding-bottom:14px; border-bottom:1px solid var(--line-soft)}
+.sec-head h2{
+  font-family:var(--display); font-weight:700; font-size:clamp(23px,2.9vw,31px);
+  letter-spacing:-.02em; margin:0 0 7px;
+}
+.sec-head p{color:var(--muted); font-size:15px; margin:0; max-width:64ch}
 
-        li {
-            margin-bottom: 0.5rem;
-        }
+/* ---------- timeline ---------- */
+.tl{position:relative; padding-left:26px}
+.tl::before{content:""; position:absolute; left:5px; top:8px; bottom:8px; width:1px; background:var(--line)}
+.job{position:relative; padding-bottom:34px}
+.job:last-child{padding-bottom:0}
+.job::before{
+  content:""; position:absolute; left:-24px; top:8px; width:9px; height:9px;
+  border-radius:50%; background:var(--void); border:2px solid var(--line);
+}
+.job.now::before{border-color:var(--signal); background:var(--signal); box-shadow:0 0 0 4px rgba(76,201,240,.14)}
+.job-top{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 12px; margin-bottom:3px}
+.job-role{font-family:var(--display); font-weight:700; font-size:17.5px; letter-spacing:-.01em}
+.job-when{font-family:var(--mono); font-size:11.5px; color:var(--muted); margin-left:auto}
+.job-org{font-size:14px; color:var(--signal); margin-bottom:9px; font-weight:500}
+.job ul{margin:0; padding-left:17px; color:var(--muted); font-size:14.5px}
+.job li{margin-bottom:5px}
+.job li::marker{color:var(--line)}
+.job b{color:var(--ink); font-weight:500}
+.job.with-media{display:grid; grid-template-columns:1fr 210px; gap:24px; align-items:start}
+.media-col.single .shot{aspect-ratio:4/3}
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
+/* video karosu: mp4 yoksa poster olarak durur, varsa üzerine gelince oynar */
+.shot--video{cursor:default}
+.shot--video video{width:100%; height:100%; object-fit:cover; display:block}
+.shot--video .zoom{display:none}
+.shot--video .play{
+  position:absolute; top:8px; left:8px; width:24px; height:24px; border-radius:50%;
+  background:rgba(6,11,20,.8); border:1px solid var(--line);
+  display:none; place-items:center; transition:opacity .2s;
+}
+.shot--video.ready{cursor:pointer}
+.shot--video.ready .play{display:grid}
+.shot--video.playing .play{opacity:.3}
+.shot--video .play svg{width:9px; height:9px; fill:var(--signal)}
+.shot--video .tag-stock{
+  position:absolute; top:8px; right:8px; padding:2px 7px; border-radius:4px;
+  font-family:var(--mono); font-size:9px; letter-spacing:.03em;
+  color:var(--muted); background:rgba(6,11,20,.8); border:1px solid var(--line);
+}
 
-        .skill-category {
-            font-weight: bold;
-            color: var(--secondary-color);
-        }
+/* ---------- projects ---------- */
+.projects{display:grid; grid-template-columns:repeat(2,1fr); gap:16px}
+.card{
+  background:var(--panel); border:1px solid var(--line-soft); border-radius:13px;
+  padding:22px; transition:border-color .18s;
+}
+.card:hover{border-color:var(--line)}
+.card.wide{grid-column:1/-1; background:linear-gradient(140deg, var(--panel-2), var(--panel))}
+.card.wide{border-color:var(--line)}
+.card-tags{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:13px}
+.card-tags .tag{font-size:11.5px; padding:3px 10px}
+.card h3{
+  font-family:var(--display); font-weight:700; font-size:19px;
+  letter-spacing:-.015em; margin:0 0 9px; line-height:1.28;
+}
+.card p{color:var(--muted); font-size:14.5px; margin:0 0 14px}
+.card b{color:var(--ink); font-weight:500}
+.card-meta{
+  font-family:var(--mono); font-size:11px; color:var(--muted);
+  padding-top:12px; border-top:1px solid var(--line-soft);
+}
+.card-link{
+  display:inline-flex; align-items:center; gap:6px; margin-top:12px;
+  color:var(--signal); text-decoration:none; font-size:13.5px; font-weight:500;
+  border-bottom:1px solid transparent; transition:.15s;
+}
+.card-link:hover{border-bottom-color:var(--signal)}
 
-        a {
-            color: var(--accent-color);
-            text-decoration: none;
-        }
+/* ---------- automation pyramid ---------- */
+.pyr{display:grid; gap:10px; justify-items:center; margin-bottom:20px}
+.band{
+  width:100%; background:var(--panel); border:1px solid var(--line-soft);
+  border-radius:11px; padding:16px 20px;
+  display:grid; grid-template-columns:172px 1fr; gap:18px; align-items:center;
+}
+.band:nth-child(1){width:84%}
+.band:nth-child(2){width:92%}
+.band:nth-child(3){width:100%}
+.band-name{font-family:var(--display); font-weight:500; font-size:14.5px}
+.band-name small{display:block; font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:2px; letter-spacing:.02em}
+.chips{display:flex; flex-wrap:wrap; gap:7px}
+.chip{
+  font-size:12.5px; color:var(--muted); background:var(--panel-2);
+  border:1px solid var(--line-soft); border-radius:6px; padding:4px 10px;
+}
+.aside-block{
+  background:var(--panel); border:1px solid var(--line-soft); border-radius:11px;
+  padding:16px 20px; display:grid; grid-template-columns:172px 1fr; gap:18px; align-items:center;
+}
+.aside-block .band-name{color:var(--setpoint)}
+.certs{
+  margin-top:22px; display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px;
+}
+.cert{
+  background:var(--panel); border:1px solid var(--line-soft); border-radius:9px;
+  padding:12px 15px; font-size:13.5px; color:var(--muted);
+}
+.cert b{display:block; color:var(--ink); font-weight:500; font-size:14px; margin-bottom:2px}
 
-        a:hover {
-            text-decoration: underline;
-        }
+/* ---------- beyond ---------- */
+.beyond{display:grid; grid-template-columns:repeat(2,1fr); gap:16px}
 
-        @media (max-width: 600px) {
-            .item-header {
-                flex-direction: column;
-            }
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+/* ---------- contact ---------- */
+.contact-box{
+  background:linear-gradient(150deg, var(--panel-2), var(--panel));
+  border:1px solid var(--line); border-radius:15px;
+  padding:clamp(28px,4vw,44px); text-align:center;
+}
+.contact-box h2{
+  font-family:var(--display); font-weight:700; font-size:clamp(23px,3vw,32px);
+  letter-spacing:-.02em; margin:0 0 10px;
+}
+.contact-box p{color:var(--muted); margin:0 auto 26px; max-width:48ch}
+.contact-row{display:flex; flex-wrap:wrap; gap:11px; justify-content:center}
+footer{
+  border-top:1px solid var(--line-soft); padding:22px 0 34px;
+  color:var(--muted); font-size:13px;
+  display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center;
+}
+footer .mono{font-family:var(--mono); font-size:11.5px}
+
+/* ---------- project media ---------- */
+.card.with-media{display:grid; grid-template-columns:1fr 330px; gap:26px; align-items:start}
+.media-col{display:grid; gap:9px}
+.shot{
+  position:relative; display:block; width:100%; aspect-ratio:16/10; padding:0;
+  border:1px solid var(--line-soft); border-radius:9px; overflow:hidden;
+  background:#060a12; cursor:zoom-in; font:inherit; color:inherit; text-align:left;
+}
+.shot img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .5s cubic-bezier(.2,.7,.3,1), opacity .3s;
+}
+.shot:hover img, .shot:focus-visible img{transform:scale(1.05); opacity:.82}
+.shot .cap{
+  position:absolute; left:0; right:0; bottom:0; padding:20px 11px 8px;
+  font-size:11.5px; line-height:1.35; color:#dbe6f5;
+  background:linear-gradient(transparent, rgba(4,8,16,.9) 62%);
+}
+.shot .zoom{
+  position:absolute; top:8px; right:8px; width:25px; height:25px; border-radius:6px;
+  background:rgba(6,11,20,.75); border:1px solid var(--line);
+  display:grid; place-items:center; opacity:0; transition:opacity .2s;
+}
+.shot:hover .zoom, .shot:focus-visible .zoom{opacity:1}
+.shot .zoom svg{width:12px; height:12px; stroke:var(--signal); fill:none; stroke-width:2.2}
+.shot.is-video .zoom{opacity:1; background:rgba(76,201,240,.92); border-color:var(--signal)}
+.shot.is-video .zoom svg{stroke:none; fill:#04121c}
+
+/* ---------- animated schematic tiles ---------- */
+.tile{
+  position:relative; border:1px solid var(--line-soft); border-radius:9px;
+  overflow:hidden; background:#060a12;
+}
+.tile.banner{margin-bottom:15px}
+.tile canvas{display:block; width:100%; aspect-ratio:21/9}
+.tile .cap{
+  position:absolute; left:0; right:0; bottom:0; padding:14px 10px 6px;
+  font-size:10.5px; line-height:1.3; color:#c3d2e6;
+  background:linear-gradient(transparent, rgba(4,8,16,.88) 58%);
+  pointer-events:none;
+}
+
+/* ---------- lightbox ---------- */
+.lb{
+  position:fixed; inset:0; z-index:200; display:none; place-items:center; padding:26px;
+  background:rgba(4,7,14,.94); backdrop-filter:blur(7px);
+}
+.lb.open{display:grid}
+.lb-inner{width:100%; max-width:min(1080px,94vw); text-align:center}
+.lb-stage{
+  max-width:100%; max-height:74vh; border-radius:11px; border:1px solid var(--line);
+  display:block; margin:0 auto; background:#060a12;
+}
+.lb-cap{margin:16px auto 0; color:var(--muted); font-size:14px; max-width:62ch}
+.lb-idx{display:block; margin-top:9px; font-family:var(--mono); font-size:11px; color:#54627a}
+.lb-btn{
+  position:absolute; background:rgba(13,21,34,.9); border:1px solid var(--line);
+  color:var(--ink); width:42px; height:42px; border-radius:50%; cursor:pointer;
+  display:grid; place-items:center; transition:.16s;
+}
+.lb-btn:hover{border-color:var(--signal); color:var(--signal)}
+.lb-btn svg{width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+.lb-close{top:20px; right:20px}
+.lb-prev{left:20px; top:50%; margin-top:-21px}
+.lb-next{right:20px; top:50%; margin-top:-21px}
+
+/* ---------- pyramid signal flow ---------- */
+.pyr-wrap{position:relative; padding-left:30px}
+.flow{position:absolute; left:9px; top:8px; bottom:8px; width:2px}
+.flow-line{position:absolute; inset:0; background:linear-gradient(180deg, rgba(176,124,247,.34), rgba(76,201,240,.34)); border-radius:2px}
+.flow-dot{position:absolute; left:-3px; width:8px; height:8px; border-radius:50%; opacity:0}
+.flow-dot.up{background:var(--signal); box-shadow:0 0 10px var(--signal); animation:flowUp 4.2s cubic-bezier(.5,0,.5,1) infinite}
+.flow-dot.down{background:var(--setpoint); box-shadow:0 0 10px var(--setpoint); animation:flowDown 4.2s cubic-bezier(.5,0,.5,1) 2.1s infinite}
+@keyframes flowUp{0%{top:100%;opacity:0} 10%{opacity:1} 88%{opacity:1} 100%{top:0;opacity:0}}
+@keyframes flowDown{0%{top:0;opacity:0} 10%{opacity:1} 88%{opacity:1} 100%{top:100%;opacity:0}}
+.flow-note{
+  display:flex; flex-wrap:wrap; gap:6px 20px; margin:14px 0 0 30px;
+  font-family:var(--mono); font-size:11px; color:var(--muted);
+}
+.flow-note i{font-style:normal}
+.flow-note .u{color:var(--signal)}
+.flow-note .d{color:var(--setpoint)}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr; gap:34px}
+  .projects, .beyond{grid-template-columns:1fr}
+  .card.with-media{grid-template-columns:1fr; gap:18px}
+  .job.with-media{grid-template-columns:1fr; gap:16px}
+  .media-col{grid-template-columns:1fr 1fr}
+  .media-col.single{max-width:320px}
+  .band, .aside-block{grid-template-columns:1fr; gap:11px}
+  .band:nth-child(1), .band:nth-child(2), .band:nth-child(3){width:100%}
+  .pyr-wrap{padding-left:22px}
+  .flow{left:5px}
+  .flow-note{margin-left:22px}
+  .nav-links a{display:none}
+  .nav-links a.keep{display:inline}
+  .job-when{margin-left:0; width:100%}
+  .lb-prev{left:8px}
+  .lb-next{right:8px}
+  .lb-close{top:12px; right:12px}
+}
+@media (max-width:520px){
+  .metrics{grid-template-columns:1fr; }
+  .metric{display:flex; justify-content:space-between; align-items:baseline}
+  .metric .k{margin:0}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition-duration:.01ms !important}
+  .flow-dot{animation:none; opacity:.9; top:50%}
+}
+</style>
 </head>
+
 <body>
 
-    <header>
-        <h1>Umut Ekin Demirkol</h1>
-        <p>Control and Automation Engineer | R&D and Software Engineer</p>
-        <p>Istanbul, Türkiye | <a href="mailto:umutekindemirkol@gmail.com" style="color: #3498db;">umutekindemirkol@gmail.com</a></p>
-    </header>
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">Umut Ekin Demirkol<span>.</span></a>
+    <div class="nav-links">
+      <a href="#deneyim" data-tr="Deneyim" data-en="Experience">Deneyim</a>
+      <a href="#projeler" data-tr="Projeler" data-en="Projects">Projeler</a>
+      <a href="#stack" data-tr="Yetkinlikler" data-en="Stack">Yetkinlikler</a>
+      <a class="keep" href="#iletisim" data-tr="İletişim" data-en="Contact">İletişim</a>
+      <div class="lang" role="group" aria-label="Dil / Language">
+        <button id="btn-tr" aria-pressed="true">TR</button>
+        <button id="btn-en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
 
-    <div class="container">
-        
-        <section id="education">
-            <h2>Education</h2>
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">Yıldız Technical University</span>
-                    <span class="item-date">Sept. 2022 - Present</span>
-                </div>
-                <div class="item-subtitle">B.Sc. in Control and Automation Engineering (100% English)</div>
-            </div>
-        </section>
+<main id="top">
 
-        <section id="experience">
-            <h2>Experience</h2>
-            
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">GDS Engineering R&D</span>
-                    <span class="item-date">Jul. 2026 - Present</span>
-                </div>
-                <div class="item-subtitle">R&D and Software Engineer</div>
-                <ul>
-                    <li>Lead developer of the TÜBİTAK maritime energy efficiency project; built the physics engine of a real-time ship digital twin in Python against measured marine engine test data, streamed to a LabVIEW operator interface over UDP, and the voyage optimization layer scoring candidate routes on speed, fuel consumption and emissions.</li>
-                    <li>Sole developer of a real-time engine sound module in Python that generates the audio signal directly from live simulation state.</li>
-                </ul>
-            </div>
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap hero-grid">
 
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">Özdaş Mühendislik</span>
-                    <span class="item-date">Feb. 2026</span>
-                </div>
-                <div class="item-subtitle">Automation Engineer Intern</div>
-                <ul>
-                    <li>Built and wired industrial control panels, bridging theoretical control logic and physical application.</li>
-                    <li>Applied CiA 402 homing methods 23, 27 and 34 for mechanical referencing and optimized dynamic performance via servo drive and motor tuning using CODESYS over EtherCAT.</li>
-                </ul>
-            </div>
+    <div>
+      <span class="loc"><span class="dot"></span>İstanbul, Türkiye</span>
 
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">Beijer Electronics</span>
-                    <span class="item-date">Jun. 2025 - Sept. 2025</span>
-                </div>
-                <div class="item-subtitle">Automation Engineer Intern</div>
-                <ul>
-                    <li>Programmed in CODESYS (IEC 61131-3) and designed HMI screens for the X2 Base series in iX Developer.</li>
-                    <li>Integrated industrial architectures via OPC UA, Modbus TCP/IP and BACnet, validating behavior in system simulation.</li>
-                    <li>Documented recurring HMI faults and their fixes into a troubleshooting reference published on Beijer's own forum, reaching 3,000+ users.</li>
-                </ul>
-            </div>
-        </section>
+      <h1 data-tr="Fiziksel sistemleri, onları çalıştıran yazılımla birlikte tasarlıyorum."
+          data-en="I design physical systems together with the software that runs them.">
+        Fiziksel sistemleri, onları çalıştıran yazılımla birlikte tasarlıyorum.
+      </h1>
 
-        <section id="projects">
-            <h2>Projects</h2>
-            
-            <div class="item">
-                <div class="item-title">Vision-Based Detection & Control System</div>
-                <ul>
-                    <li>Trained a YOLOv8-Nano model (~6 MB) on a restructured two-class dataset for real-time inference; built a Python/OpenCV pipeline pulling the live camera feed over RTSP and running detection frame by frame.</li>
-                    <li>Modeling quadrotor flight dynamics in MATLAB & Simulink, comparing PID, nonlinear PID and LQR for stable, energy-optimal flight.</li>
-                </ul>
-            </div>
+      <p class="lede"
+         data-tr="Yıldız Teknik Üniversitesi Kontrol ve Otomasyon Mühendisliği son sınıf öğrencisiyim. PLC mantığından dijital ikizlere, saha veri yolundan SCADA ekranına kadar kontrol zincirinin tamamında çalışıyorum."
+         data-en="Final-year Control and Automation Engineering student at Yıldız Technical University. I work across the whole control chain — from PLC logic and fieldbus wiring to digital twins and SCADA screens.">
+        Yıldız Teknik Üniversitesi Kontrol ve Otomasyon Mühendisliği son sınıf öğrencisiyim. PLC mantığından dijital ikizlere, saha veri yolundan SCADA ekranına kadar kontrol zincirinin tamamında çalışıyorum.
+      </p>
 
-            <div class="item">
-                <div class="item-title">Smart Factory Automation & SCADA System</div>
-                <ul>
-                    <li>Developing CODESYS control logic validated against a Factory I/O virtual production line, with an Ignition SCADA/HMI layer linked over MQTT and Modbus TCP/IP.</li>
-                </ul>
-            </div>
+      <div class="tags">
+        <span class="tag t-sig" data-tr="Endüstriyel Otomasyon" data-en="Industrial Automation">Endüstriyel Otomasyon</span>
+        <span class="tag t-set" data-tr="Dijital İkiz" data-en="Digital Twin">Dijital İkiz</span>
+        <span class="tag t-amb">SCADA &amp; HMI</span>
+        <span class="tag t-sig" data-tr="Kontrol Teorisi" data-en="Control Theory">Kontrol Teorisi</span>
+        <span class="tag t-set" data-tr="Gerçek Zamanlı Simülasyon" data-en="Real-Time Simulation">Gerçek Zamanlı Simülasyon</span>
+      </div>
 
-            <div class="item">
-                <div class="item-title">Smart Home Automation & Energy Management System</div>
-                <ul>
-                    <li>Project Leader of an international collaboration: implemented industrial-grade CODESYS logic managing 400+ I/O points, interfaced with HOME I/O simulation for scenario validation.</li>
-                    <li>Designed the interface in iX Developer plus a custom web platform, with real-time exchange over Modbus TCP/IP and MQTT.</li>
-                </ul>
-            </div>
-        </section>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="#projeler" data-tr="Projeleri incele" data-en="See the projects">Projeleri incele</a>
+        <a class="btn btn-ghost" href="cv.pdf" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span data-tr="CV indir" data-en="Download CV">CV indir</span>
+        </a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/umut-ekin-demirkol" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM2.4 9.5h5.16V21H2.4zM9.9 9.5h4.95v1.57h.07c.69-1.24 2.37-2.03 3.9-2.03 4.17 0 4.94 2.6 4.94 5.98V21h-5.16v-5.06c0-1.21-.02-2.76-1.75-2.76-1.76 0-2.03 1.31-2.03 2.67V21H9.9z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
 
-        <section id="skills">
-            <h2>Skills & Certifications</h2>
-            <div class="skills-grid">
-                <div>
-                    <span class="skill-category">Software & Tools:</span> CODESYS (IEC 61131-3), Python, C, MATLAB & Simulink, LabVIEW, iX Developer, Ignition SCADA, Factory I/O & HOME I/O, OpenCV & YOLO
-                </div>
-                <div>
-                    <span class="skill-category">Protocols & Hardware:</span> OPC UA, Modbus TCP/IP, EtherCAT, BACnet, MQTT, UDP, PLC & HMI Hardware, Servo Drives, ESP32
-                </div>
-                <div>
-                    <span class="skill-category">Languages:</span> Turkish (Native), English (C1 CEFR)
-                </div>
-                <div>
-                    <span class="skill-category">Courses:</span> Universal Robots Academy, LabVIEW Essentials, CODESYS Fundamentals & Simulation, McKinsey Forward Program
-                </div>
-            </div>
-        </section>
+    <!-- signature element -->
+    <div class="scope">
+      <div class="scope-head">
+        <span class="scope-title" data-tr="PID adım yanıtı" data-en="PID step response">PID adım yanıtı</span>
+        <span class="scope-sub">G(s) = 1 / (s² + s + 1)</span>
+      </div>
+      <p class="scope-sub" style="margin:0"
+         data-tr="Kazançları oynatın — eğri anında yeniden hesaplanır."
+         data-en="Drag the gains — the curve recomputes instantly.">
+        Kazançları oynatın — eğri anında yeniden hesaplanır.
+      </p>
+
+      <div class="plot"><canvas id="plot" aria-label="PID adım yanıtı grafiği" role="img"></canvas></div>
+
+      <div class="legend">
+        <span><i style="background:var(--setpoint)"></i><span data-tr="Referans" data-en="Setpoint">Referans</span></span>
+        <span><i style="background:var(--signal)"></i><span data-tr="Çıkış" data-en="Output">Çıkış</span></span>
+      </div>
+
+      <div class="sliders">
+        <div class="sl">
+          <label for="kp">Kp</label>
+          <input type="range" id="kp" min="0" max="20" step="0.2" value="14">
+          <output id="kp-v">14.0</output>
+        </div>
+        <div class="sl">
+          <label for="ki">Ki</label>
+          <input type="range" id="ki" min="0" max="15" step="0.2" value="4">
+          <output id="ki-v">4.0</output>
+        </div>
+        <div class="sl">
+          <label for="kd">Kd</label>
+          <input type="range" id="kd" min="0" max="10" step="0.1" value="3.5">
+          <output id="kd-v">3.5</output>
+        </div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <span class="k" data-tr="Aşım" data-en="Overshoot">Aşım</span>
+          <span class="v" id="m-os">—</span>
+        </div>
+        <div class="metric">
+          <span class="k" data-tr="Oturma (±2%)" data-en="Settling (±2%)">Oturma (±2%)</span>
+          <span class="v" id="m-ts">—</span>
+        </div>
+        <div class="metric">
+          <span class="k" data-tr="Yükselme" data-en="Rise time">Yükselme</span>
+          <span class="v" id="m-tr">—</span>
+        </div>
+      </div>
+
+      <button class="reset" id="reset" data-tr="Varsayılan kazançlara dön" data-en="Reset to default gains">Varsayılan kazançlara dön</button>
+    </div>
+
+  </div>
+</header>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="deneyim">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-tr="Deneyim" data-en="Experience">Deneyim</h2>
+      <p data-tr="Ar-Ge yazılımından saha panosuna kadar; her durakta kontrol sisteminin farklı bir katmanıyla çalıştım."
+         data-en="From R&amp;D software to wiring field panels — each stop covered a different layer of the control system.">
+        Ar-Ge yazılımından saha panosuna kadar; her durakta kontrol sisteminin farklı bir katmanıyla çalıştım.
+      </p>
+    </div>
+
+    <div class="tl">
+
+      <article class="job now with-media">
+        <div>
+        <div class="job-top">
+          <span class="job-role" data-tr="Ar-Ge ve Yazılım Mühendisi" data-en="R&amp;D and Software Engineer">Ar-Ge ve Yazılım Mühendisi</span>
+          <span class="job-when" data-tr="Tem. 2026 — Devam ediyor" data-en="Jul. 2026 — Present">Tem. 2026 — Devam ediyor</span>
+        </div>
+        <div class="job-org">GDS Engineering R&amp;D · İstanbul</div>
+        <ul>
+          <li data-tr="TÜBİTAK denizcilik enerji verimliliği projesinin baş geliştiricisi. Gerçek zamanlı bir gemi dijital ikizinin fizik motorunu Python'da kurdum ve ölçülmüş deniz motoru test verisine karşı doğruladım."
+              data-en="Lead developer of the TÜBİTAK maritime energy efficiency project. Built the physics engine of a real-time ship digital twin in Python, validated against measured marine engine test data.">
+            TÜBİTAK denizcilik enerji verimliliği projesinin baş geliştiricisi. Gerçek zamanlı bir gemi dijital ikizinin fizik motorunu Python'da kurdum ve ölçülmüş deniz motoru test verisine karşı doğruladım.
+          </li>
+          <li data-tr="Simülasyon durumunu UDP üzerinden LabVIEW operatör arayüzüne aktardım; hız, yakıt tüketimi ve emisyona göre rota puanlayan sefer optimizasyon katmanını geliştirdim."
+              data-en="Streamed simulation state to a LabVIEW operator interface over UDP, and built the voyage optimization layer scoring candidate routes on speed, fuel consumption and emissions.">
+            Simülasyon durumunu UDP üzerinden LabVIEW operatör arayüzüne aktardım; hız, yakıt tüketimi ve emisyona göre rota puanlayan sefer optimizasyon katmanını geliştirdim.
+          </li>
+          <li data-tr="Ses sinyalini doğrudan canlı simülasyon durumundan üreten gerçek zamanlı motor sesi modülünü tek başıma yazdım."
+              data-en="Sole developer of a real-time engine sound module generating the audio signal directly from live simulation state.">
+            Ses sinyalini doğrudan canlı simülasyon durumundan üreten gerçek zamanlı motor sesi modülünü tek başıma yazdım.
+          </li>
+        </ul>
+        </div>
+
+        <div class="media-col single">
+          <button class="shot" type="button"
+                  data-full="media/gemi-tcg-anadolu.jpg"
+                  data-cap-tr="TCG Anadolu (L-403), Gölcük. Dijital ikizin modellediği tahrik sisteminin gerçek dünyadaki karşılığı."
+                  data-cap-en="TCG Anadolu (L-403), Gölcük — the real-world counterpart of the propulsion system the digital twin models.">
+            <img src="media/gemi-tcg-anadolu-thumb.jpg" width="720" height="450" loading="lazy" alt="TCG Anadolu (L-403) Gölcük'te rıhtımda">
+            <span class="zoom"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+            <span class="cap" data-tr="Gölcük" data-en="Gölcük">Gölcük</span>
+          </button>
+        </div>
+      </article>
+
+      <article class="job with-media">
+        <div>
+        <div class="job-top">
+          <span class="job-role" data-tr="Otomasyon Mühendisi Stajyeri" data-en="Automation Engineer Intern">Otomasyon Mühendisi Stajyeri</span>
+          <span class="job-when" data-tr="Şub. 2026" data-en="Feb. 2026">Şub. 2026</span>
+        </div>
+        <div class="job-org">Özdaş Mühendislik · İstanbul</div>
+        <ul>
+          <li data-tr="Endüstriyel kontrol panolarını kurdum ve kablolamasını yaptım; teorik kontrol mantığı ile fiziksel uygulama arasındaki köprüyü kurdum."
+              data-en="Built and wired industrial control panels, bridging theoretical control logic and physical application.">
+            Endüstriyel kontrol panolarını kurdum ve kablolamasını yaptım; teorik kontrol mantığı ile fiziksel uygulama arasındaki köprüyü kurdum.
+          </li>
+          <li data-tr="Mekanik referanslama için CiA 402 homing metotları 23, 27 ve 34'ü uyguladım; EtherCAT üzerinden CODESYS ile servo sürücü ve motor ayarı yaparak dinamik performansı iyileştirdim."
+              data-en="Applied CiA 402 homing methods 23, 27 and 34 for mechanical referencing, and optimized dynamic performance through servo drive and motor tuning using CODESYS over EtherCAT.">
+            Mekanik referanslama için CiA 402 homing metotları 23, 27 ve 34'ü uyguladım; EtherCAT üzerinden CODESYS ile servo sürücü ve motor ayarı yaparak dinamik performansı iyileştirdim.
+          </li>
+        </ul>
+        </div>
+
+        <div class="media-col single">
+          <div class="shot shot--video">
+            <video muted loop playsinline preload="metadata"
+                   poster="media/ozdas-pano-thumb.jpg" aria-label="Endüstriyel kontrol panosu, sinyal lambaları">
+              <source src="media/ozdas-pano.mp4" type="video/mp4">
+            </video>
+            <span class="play"><svg viewBox="0 0 10 10"><path d="M2 1l6 4-6 4z"/></svg></span>
+            <span class="tag-stock" data-tr="temsili" data-en="stock">temsili</span>
+            <span class="cap" data-tr="Endüstriyel kontrol panosu — saha seviyesi" data-en="Industrial control panel — field level">Endüstriyel kontrol panosu — saha seviyesi</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="job with-media">
+        <div>
+        <div class="job-top">
+          <span class="job-role" data-tr="Otomasyon Mühendisi Stajyeri" data-en="Automation Engineer Intern">Otomasyon Mühendisi Stajyeri</span>
+          <span class="job-when" data-tr="Haz. — Eyl. 2025" data-en="Jun. — Sept. 2025">Haz. — Eyl. 2025</span>
+        </div>
+        <div class="job-org">Beijer Electronics · İstanbul</div>
+        <ul>
+          <li data-tr="CODESYS (IEC 61131-3) ile programlama yaptım ve X2 Base serisi için iX Developer üzerinde HMI ekranları tasarladım."
+              data-en="Programmed in CODESYS (IEC 61131-3) and designed HMI screens for the X2 Base series in iX Developer.">
+            CODESYS (IEC 61131-3) ile programlama yaptım ve X2 Base serisi için iX Developer üzerinde HMI ekranları tasarladım.
+          </li>
+          <li data-tr="OPC UA, Modbus TCP/IP ve BACnet üzerinden endüstriyel mimarileri entegre ettim, davranışı sistem simülasyonunda doğruladım."
+              data-en="Integrated industrial architectures over OPC UA, Modbus TCP/IP and BACnet, validating behavior in system simulation.">
+            OPC UA, Modbus TCP/IP ve BACnet üzerinden endüstriyel mimarileri entegre ettim, davranışı sistem simülasyonunda doğruladım.
+          </li>
+          <li data-tr="Tekrar eden HMI arızalarını ve çözümlerini bir sorun giderme rehberine dönüştürdüm; rehber Beijer'in kendi forumunda yayımlandı, <b>3.000'den fazla kullanıcıya</b> ulaştı ve satış ekibiyle paylaşıldı."
+              data-en="Documented recurring HMI faults and their fixes into a troubleshooting reference published on Beijer's own forum, reaching <b>3,000+ users</b> and shared with the sales team.">
+            Tekrar eden HMI arızalarını ve çözümlerini bir sorun giderme rehberine dönüştürdüm; rehber Beijer'in kendi forumunda yayımlandı, <b>3.000'den fazla kullanıcıya</b> ulaştı ve satış ekibiyle paylaşıldı.
+          </li>
+        </ul>
+        </div>
+
+        <div class="media-col single">
+          <div class="shot shot--video">
+            <video muted loop playsinline preload="metadata"
+                   poster="media/beijer-hat-thumb.jpg" aria-label="Otomatik montaj hattı, pnömatik aktüatörler">
+              <source src="media/beijer-hat.mp4" type="video/mp4">
+            </video>
+            <span class="play"><svg viewBox="0 0 10 10"><path d="M2 1l6 4-6 4z"/></svg></span>
+            <span class="tag-stock" data-tr="temsili" data-en="stock">temsili</span>
+            <span class="cap" data-tr="Otomasyon hattı — HMI ve PLC katmanının kontrol ettiği süreç" data-en="Automation line — the process the HMI and PLC layer controls">Otomasyon hattı — HMI ve PLC katmanının kontrol ettiği süreç</span>
+          </div>
+        </div>
+      </article>
 
     </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projeler">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-tr="Projeler" data-en="Projects">Projeler</h2>
+      <p data-tr="Hepsinin ortak noktası aynı: bir fiziksel süreci modelle, kontrol et, sonra gerçek donanıma karşı doğrula."
+         data-en="They all share the same shape: model a physical process, control it, then validate against real hardware.">
+        Hepsinin ortak noktası aynı: bir fiziksel süreci modelle, kontrol et, sonra gerçek donanıma karşı doğrula.
+      </p>
+    </div>
+
+    <div class="projects">
+
+      <article class="card wide with-media">
+        <div>
+        <div class="card-tags">
+          <span class="tag t-sig">Python</span>
+          <span class="tag t-set" data-tr="Dijital İkiz" data-en="Digital Twin">Dijital İkiz</span>
+          <span class="tag t-amb">LabVIEW</span>
+          <span class="tag t-sig">UDP</span>
+          <span class="tag t-set">TÜBİTAK</span>
+        </div>
+        <h3 data-tr="Gemi Dijital İkizi ve Sefer Optimizasyonu" data-en="Ship Digital Twin &amp; Voyage Optimization">Gemi Dijital İkizi ve Sefer Optimizasyonu</h3>
+        <p data-tr="Bir geminin tahrik sistemini gerçek zamanlı olarak simüle eden fizik motoru. Model, ölçülmüş deniz motoru test verisine karşı doğrulandı; simülasyon durumu UDP üzerinden LabVIEW operatör arayüzüne akıyor. Üzerine kurduğum optimizasyon katmanı, aday rotaları <b>hız, yakıt tüketimi ve emisyon</b> ekseninde puanlıyor. Ayrıca ses sinyalini doğrudan canlı simülasyon durumundan üreten motor sesi modülünü de geliştirdim."
+           data-en="A physics engine simulating a ship's propulsion system in real time. The model is validated against measured marine engine test data, and simulation state streams to a LabVIEW operator interface over UDP. The optimization layer on top scores candidate routes on <b>speed, fuel consumption and emissions</b>. I also built the engine sound module that generates its audio signal directly from live simulation state.">
+          Bir geminin tahrik sistemini gerçek zamanlı olarak simüle eden fizik motoru. Model, ölçülmüş deniz motoru test verisine karşı doğrulandı; simülasyon durumu UDP üzerinden LabVIEW operatör arayüzüne akıyor. Üzerine kurduğum optimizasyon katmanı, aday rotaları <b>hız, yakıt tüketimi ve emisyon</b> ekseninde puanlıyor. Ayrıca ses sinyalini doğrudan canlı simülasyon durumundan üreten motor sesi modülünü de geliştirdim.
+        </p>
+        <div class="card-meta" data-tr="GDS Engineering R&amp;D · Baş geliştirici · Devam ediyor" data-en="GDS Engineering R&amp;D · Lead developer · Ongoing">GDS Engineering R&amp;D · Baş geliştirici · Devam ediyor</div>
+        </div>
+
+        <div class="media-col">
+          <button class="shot" type="button"
+                  data-full="media/teknofest-mavi-vatan.jpg"
+                  data-cap-tr="TEKNOFEST Mavi Vatan 2026, Gölcük Tersanesi Komutanlığı — 20-23 Ağustos 2026."
+                  data-cap-en="TEKNOFEST Mavi Vatan 2026, Gölcük Naval Shipyard — 20-23 August 2026.">
+            <img src="media/teknofest-mavi-vatan-thumb.jpg" width="720" height="450" loading="lazy" alt="TEKNOFEST Mavi Vatan 2026 afişi ve gemi dümeni">
+            <span class="zoom"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+            <span class="cap" data-tr="TEKNOFEST Mavi Vatan 2026" data-en="TEKNOFEST Mavi Vatan 2026">TEKNOFEST Mavi Vatan 2026</span>
+          </button>
+
+          <div class="shot shot--video">
+            <video muted loop playsinline preload="metadata"
+                   poster="media/gds-gemi-thumb.jpg" aria-label="Konteyner gemisi, havadan görünüm">
+              <source src="media/gds-gemi.mp4" type="video/mp4">
+            </video>
+            <span class="play"><svg viewBox="0 0 10 10"><path d="M2 1l6 4-6 4z"/></svg></span>
+            <span class="tag-stock" data-tr="temsili" data-en="stock">temsili</span>
+            <span class="cap" data-tr="Sefer optimizasyonunun hedefi: yakıt ve emisyon" data-en="What voyage optimization targets: fuel and emissions">Sefer optimizasyonunun hedefi: yakıt ve emisyon</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="tile banner">
+          <canvas data-scene="detect" aria-label="Nesne tespiti şeması: hedefleri takip eden sınırlayıcı kutular" role="img"></canvas>
+          <span class="cap" data-tr="Çıkarım hattı — kutular, sınıflar ve güven skorları" data-en="Inference pipeline — boxes, classes and confidence scores">Çıkarım hattı — kutular, sınıflar ve güven skorları</span>
+        </div>
+        <div class="card-tags">
+          <span class="tag t-sig">YOLOv8</span>
+          <span class="tag t-amb">OpenCV</span>
+          <span class="tag t-set">MATLAB / Simulink</span>
+          <span class="tag t-sig">RTSP</span>
+        </div>
+        <h3 data-tr="Görü Tabanlı Tespit ve Kontrol Sistemi" data-en="Vision-Based Detection &amp; Control System">Görü Tabanlı Tespit ve Kontrol Sistemi</h3>
+        <p data-tr="Yeniden yapılandırılmış iki sınıflı bir veri seti üzerinde eğitilmiş <b>YOLOv8-Nano</b> modeli (~6 MB) ile gerçek zamanlı çıkarım. Python/OpenCV hattı canlı kamera görüntüsünü RTSP üzerinden çekip kare kare işliyor. Paralel olarak MATLAB &amp; Simulink'te quadrotor uçuş dinamiğini modelliyor; kararlı ve enerji açısından optimum uçuş için <b>PID, doğrusal olmayan PID ve LQR</b> kontrolcülerini karşılaştırıyorum."
+           data-en="Real-time inference with a <b>YOLOv8-Nano</b> model (~6 MB) trained on a restructured two-class dataset. A Python/OpenCV pipeline pulls the live camera feed over RTSP and runs detection frame by frame. In parallel, I model quadrotor flight dynamics in MATLAB &amp; Simulink, comparing <b>PID, nonlinear PID and LQR</b> for stable, energy-optimal flight.">
+          Yeniden yapılandırılmış iki sınıflı bir veri seti üzerinde eğitilmiş <b>YOLOv8-Nano</b> modeli (~6 MB) ile gerçek zamanlı çıkarım. Python/OpenCV hattı canlı kamera görüntüsünü RTSP üzerinden çekip kare kare işliyor. Paralel olarak MATLAB &amp; Simulink'te quadrotor uçuş dinamiğini modelliyor; kararlı ve enerji açısından optimum uçuş için <b>PID, doğrusal olmayan PID ve LQR</b> kontrolcülerini karşılaştırıyorum.
+        </p>
+        <div class="card-meta" data-tr="Kişisel proje · Devam ediyor" data-en="Personal project · Ongoing">Kişisel proje · Devam ediyor</div>
+      </article>
+
+      <article class="card">
+        <div class="tile banner">
+          <canvas data-scene="line" aria-label="Üretim hattı şeması: konveyör, fotosel sensörü ve PLC giriş-çıkış bitleri" role="img"></canvas>
+          <span class="cap" data-tr="Konveyör, fotosel ve PLC I/O bitleri — parça sayımı" data-en="Conveyor, photoelectric sensor and PLC I/O bits — part counting">Konveyör, fotosel ve PLC I/O bitleri — parça sayımı</span>
+        </div>
+        <div class="card-tags">
+          <span class="tag t-sig">CODESYS</span>
+          <span class="tag t-amb">Ignition SCADA</span>
+          <span class="tag t-set">MQTT</span>
+          <span class="tag t-sig">Factory I/O</span>
+        </div>
+        <h3 data-tr="Akıllı Fabrika Otomasyonu ve SCADA" data-en="Smart Factory Automation &amp; SCADA">Akıllı Fabrika Otomasyonu ve SCADA</h3>
+        <p data-tr="Factory I/O sanal üretim hattına karşı doğrulanan CODESYS kontrol mantığı. Üzerine MQTT ve Modbus TCP/IP ile bağlanan bir <b>Ignition SCADA/HMI</b> katmanı kuruyorum; amaç, saha cihazından denetim ekranına kadar uçtan uca izlenebilir bir hat."
+           data-en="CODESYS control logic validated against a Factory I/O virtual production line, with an <b>Ignition SCADA/HMI</b> layer linked over MQTT and Modbus TCP/IP — an end-to-end traceable line from field device to supervisory screen.">
+          Factory I/O sanal üretim hattına karşı doğrulanan CODESYS kontrol mantığı. Üzerine MQTT ve Modbus TCP/IP ile bağlanan bir <b>Ignition SCADA/HMI</b> katmanı kuruyorum; amaç, saha cihazından denetim ekranına kadar uçtan uca izlenebilir bir hat.
+        </p>
+        <div class="card-meta" data-tr="Kişisel proje · Devam ediyor" data-en="Personal project · Ongoing">Kişisel proje · Devam ediyor</div>
+      </article>
+
+      <article class="card wide with-media">
+        <div>
+        <div class="card-tags">
+          <span class="tag t-sig">CODESYS</span>
+          <span class="tag t-set">400+ I/O</span>
+          <span class="tag t-amb">HOME I/O</span>
+          <span class="tag t-sig">Modbus TCP/IP</span>
+          <span class="tag t-set" data-tr="Proje Lideri" data-en="Project Leader">Proje Lideri</span>
+        </div>
+        <h3 data-tr="Akıllı Ev Otomasyonu ve Enerji Yönetimi" data-en="Smart Home Automation &amp; Energy Management">Akıllı Ev Otomasyonu ve Enerji Yönetimi</h3>
+        <p data-tr="Prof. Bernard Riera ile yürütülen, Beijer Electronics tarafından desteklenen uluslararası bir iş birliğinin <b>proje lideriyim</b>. <b>400'den fazla I/O noktasını</b> yöneten endüstriyel seviyede CODESYS mantığını yazdım ve senaryo doğrulaması için HOME I/O simülasyonuyla eşleştirdim. Arayüzü iX Developer'da ve ayrıca özel bir web platformunda tasarladım; enerji tüketimi izleme ve optimizasyonu Modbus TCP/IP ile MQTT üzerinden gerçek zamanlı yürüyor."
+           data-en="<b>Project leader</b> of an international collaboration with Prof. Bernard Riera, supported by Beijer Electronics. I implemented industrial-grade CODESYS logic managing <b>400+ I/O points</b>, interfaced with HOME I/O simulation for scenario validation. The interface was designed in iX Developer plus a custom web platform, with real-time exchange over Modbus TCP/IP and MQTT for energy consumption monitoring and optimization.">
+          Prof. Bernard Riera ile yürütülen, Beijer Electronics tarafından desteklenen uluslararası bir iş birliğinin <b>proje lideriyim</b>. <b>400'den fazla I/O noktasını</b> yöneten endüstriyel seviyede CODESYS mantığını yazdım ve senaryo doğrulaması için HOME I/O simülasyonuyla eşleştirdim. Arayüzü iX Developer'da ve ayrıca özel bir web platformunda tasarladım; enerji tüketimi izleme ve optimizasyonu Modbus TCP/IP ile MQTT üzerinden gerçek zamanlı yürüyor.
+        </p>
+        <div class="card-meta" data-tr="Prof. Bernard Riera iş birliği · Beijer Electronics desteğiyle · Oca. — Tem. 2026" data-en="In collaboration with Prof. Bernard Riera · Supported by Beijer Electronics · Jan. — Jul. 2026">Prof. Bernard Riera iş birliği · Beijer Electronics desteğiyle · Oca. — Tem. 2026</div>
+        </div>
+
+        <div class="media-col">
+          <button class="shot" type="button"
+                  data-full="media/home-io-simulasyon.jpg"
+                  data-cap-tr="HOME I/O — kontrol mantığının senaryo bazında doğrulandığı bina simülasyonu. Sağ panelde hava koşulları ve anlık güç tüketimi izleniyor."
+                  data-cap-en="HOME I/O — the building simulation used to validate the control logic scenario by scenario. The right panel tracks weather conditions and live power draw.">
+            <img src="media/home-io-simulasyon-thumb.jpg" width="720" height="450" loading="lazy" alt="HOME I/O bina simülasyonu ekran görüntüsü">
+            <span class="zoom"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+            <span class="cap" data-tr="HOME I/O senaryo doğrulaması" data-en="HOME I/O scenario validation">HOME I/O senaryo doğrulaması</span>
+          </button>
+
+          <button class="shot" type="button"
+                  data-full="media/akilli-ev-arayuz.jpg"
+                  data-cap-tr="Geliştirdiğim web arayüzü: 14 zon (Salon, Mutfak, Garaj, Banyo, yatak odaları...), oda senaryosu seçimi, aydınlatma dim kontrolü ve iklimlendirme setpoint'i. Her kart otonom ve manuel mod arasında geçiş yapabiliyor."
+                  data-cap-en="The web interface I built: 14 zones (living room, kitchen, garage, bathroom, bedrooms...), room scenario selection, lighting dim control and climate setpoint. Each card switches between autonomous and manual mode.">
+            <img src="media/akilli-ev-arayuz-thumb.jpg" width="720" height="450" loading="lazy" alt="Akıllı ev web arayüzü: aydınlatma ve iklimlendirme kontrol kartları">
+            <span class="zoom"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+            <span class="cap" data-tr="Oda kontrol arayüzü — 14 zon" data-en="Room control interface — 14 zones">Oda kontrol arayüzü — 14 zon</span>
+          </button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ STACK ============ -->
+<section id="stack">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-tr="Yetkinlikler" data-en="Stack">Yetkinlikler</h2>
+      <p data-tr="Otomasyon piramidine göre dizildi — bir aracın hangi katmanda durduğu, ne işe yaradığı kadar önemli."
+         data-en="Ordered by the automation pyramid — where a tool sits matters as much as what it does.">
+        Otomasyon piramidine göre dizildi — bir aracın hangi katmanda durduğu, ne işe yaradığı kadar önemli.
+      </p>
+    </div>
+
+    <div class="pyr-wrap">
+      <div class="flow" aria-hidden="true">
+        <span class="flow-line"></span>
+        <span class="flow-dot up"></span>
+        <span class="flow-dot down"></span>
+      </div>
+      <div class="pyr">
+      <div class="band">
+        <div class="band-name">
+          <span data-tr="Denetim seviyesi" data-en="Supervisory level">Denetim seviyesi</span>
+          <small data-tr="izleme ve operatör" data-en="monitoring &amp; operator">izleme ve operatör</small>
+        </div>
+        <div class="chips">
+          <span class="chip">Ignition SCADA</span>
+          <span class="chip">iX Developer</span>
+          <span class="chip">LabVIEW</span>
+          <span class="chip">OPC UA</span>
+          <span class="chip">MQTT</span>
+          <span class="chip">BACnet</span>
+        </div>
+      </div>
+      <div class="band">
+        <div class="band-name">
+          <span data-tr="Kontrol seviyesi" data-en="Control level">Kontrol seviyesi</span>
+          <small data-tr="mantık ve regülasyon" data-en="logic &amp; regulation">mantık ve regülasyon</small>
+        </div>
+        <div class="chips">
+          <span class="chip">CODESYS (IEC 61131-3)</span>
+          <span class="chip">Python</span>
+          <span class="chip">C</span>
+          <span class="chip">PID / LQR</span>
+          <span class="chip">Modbus TCP/IP</span>
+        </div>
+      </div>
+      <div class="band">
+        <div class="band-name">
+          <span data-tr="Saha seviyesi" data-en="Field level">Saha seviyesi</span>
+          <small data-tr="donanım ve tahrik" data-en="hardware &amp; actuation">donanım ve tahrik</small>
+        </div>
+        <div class="chips">
+          <span class="chip" data-tr="PLC &amp; HMI donanımı" data-en="PLC &amp; HMI hardware">PLC &amp; HMI donanımı</span>
+          <span class="chip" data-tr="Servo sürücüler" data-en="Servo drives">Servo sürücüler</span>
+          <span class="chip">EtherCAT</span>
+          <span class="chip">CiA 402</span>
+          <span class="chip">ESP32</span>
+        </div>
+      </div>
+    </div>
+    <p class="flow-note">
+      <span><i class="u">↑</i> <span data-tr="ölçüm yukarı çıkar" data-en="measurement flows up">ölçüm yukarı çıkar</span></span>
+      <span><i class="d">↓</i> <span data-tr="komut sahaya iner" data-en="command flows down">komut sahaya iner</span></span>
+    </p>
+    </div>
+
+    <div class="aside-block">
+      <div class="band-name">
+        <span data-tr="Modelleme ve doğrulama" data-en="Modeling &amp; validation">Modelleme ve doğrulama</span>
+        <small data-tr="piramidin her katmanına paralel" data-en="parallel to every layer">piramidin her katmanına paralel</small>
+      </div>
+      <div class="chips">
+        <span class="chip">MATLAB &amp; Simulink</span>
+        <span class="chip">Factory I/O</span>
+        <span class="chip">HOME I/O</span>
+        <span class="chip">OpenCV &amp; YOLO</span>
+      </div>
+    </div>
+
+    <div class="certs">
+      <div class="cert"><b>Universal Robots Academy</b><span data-tr="e-Series Core &amp; Pro Track" data-en="e-Series Core &amp; Pro Track">e-Series Core &amp; Pro Track</span></div>
+      <div class="cert"><b>Elginkan Vakfı</b><span data-tr="Akıllı Röle ve Mikro PLC Programlama, 76 saat" data-en="Smart Relay &amp; Micro-Level PLC Programming, 76h">Akıllı Röle ve Mikro PLC Programlama, 76 saat</span></div>
+      <div class="cert"><b>CODESYS Fundamentals &amp; Simulation</b><span>Udemy</span></div>
+      <div class="cert"><b>LabVIEW Essentials</b><span>Udemy</span></div>
+      <div class="cert"><b>McKinsey Forward Program</b><span data-tr="Liderlik ve problem çözme" data-en="Leadership &amp; problem solving">Liderlik ve problem çözme</span></div>
+      <div class="cert"><b data-tr="Diller" data-en="Languages">Diller</b><span data-tr="Türkçe (ana dil) · İngilizce (C1)" data-en="Turkish (native) · English (C1)">Türkçe (ana dil) · İngilizce (C1)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BEYOND ============ -->
+<section id="disinda">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-tr="Mühendisliğin dışında" data-en="Beyond engineering">Mühendisliğin dışında</h2>
+      <p data-tr="Enerji sektörünün öğrenci topluluklarında üç yıl; katılımcı olarak değil, organizatör olarak."
+         data-en="Three years in the energy sector's student community — as an organizer, not an attendee.">
+        Enerji sektörünün öğrenci topluluklarında üç yıl; katılımcı olarak değil, organizatör olarak.
+      </p>
+    </div>
+
+    <div class="beyond">
+      <article class="card">
+        <div class="tile banner">
+          <canvas data-scene="grid" aria-label="Şebeke frekansı ve birincil frekans kontrolü modeli" role="img"></canvas>
+          <span class="cap" data-tr="CIGRE'nin konusu — 50 Hz'i yerinde tutan birincil frekans kontrolü (model)" data-en="What CIGRE is about — primary frequency control holding 50 Hz (model)">CIGRE'nin konusu — 50 Hz'i yerinde tutan birincil frekans kontrolü (model)</span>
+        </div>
+        <div class="card-tags">
+          <span class="tag t-amb" data-tr="Yönetim Kurulu Üyesi" data-en="Board Member">Yönetim Kurulu Üyesi</span>
+          <span class="tag t-sig">2023 — 2026</span>
+        </div>
+        <h3 data-tr="CIGRE YTÜ Öğrenci Kolu" data-en="CIGRE YTU Student Chapter">CIGRE YTÜ Öğrenci Kolu</h3>
+        <p data-tr="Aktif üyelikten başlayıp <b>Genel Direktörlüğe</b> yükseldim; kolun stratejik yönetimini ve kurumsal iş birliklerini yürüttüm. <b>Yıldız Enerji Zirvesi'nin</b> baş organizatörü olarak zirvenin en büyük sponsorunu kazandırdım ve saha ekibinin lojistiğini yönettim."
+           data-en="Progressed from active member to <b>General Director</b>, overseeing strategic leadership and corporate collaborations. As lead organizer of the <b>Yıldız Energy Summit</b>, I secured its largest sponsor and managed on-site team logistics.">
+          Aktif üyelikten başlayıp <b>Genel Direktörlüğe</b> yükseldim; kolun stratejik yönetimini ve kurumsal iş birliklerini yürüttüm. <b>Yıldız Enerji Zirvesi'nin</b> baş organizatörü olarak zirvenin en büyük sponsorunu kazandırdım ve saha ekibinin lojistiğini yönettim.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-tags">
+          <span class="tag t-set" data-tr="Organizasyon Ekibi" data-en="Organization Team">Organizasyon Ekibi</span>
+          <span class="tag t-sig">2024 — 2025</span>
+        </div>
+        <h3 data-tr="TÜREK Konferansı" data-en="TÜREK Conference">TÜREK Konferansı</h3>
+        <p data-tr="İki yıl boyunca öğrenci gönüllüsü olarak konferans standlarındaki katılımcı firmalara lojistik ve teknik destek sağladım."
+           data-en="Two-year student volunteer providing logistical and technical support for exhibiting companies at conference booths.">
+          İki yıl boyunca öğrenci gönüllüsü olarak konferans standlarındaki katılımcı firmalara lojistik ve teknik destek sağladım.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="iletisim">
+  <div class="wrap">
+    <div class="contact-box">
+      <h2 data-tr="Bir sistem kurmamız mı gerekiyor?" data-en="Something to build?">Bir sistem kurmamız mı gerekiyor?</h2>
+      <p data-tr="Otomasyon, kontrol sistemleri ve gerçek zamanlı simülasyon üzerine yeni projelere açığım. En hızlısı e-posta."
+         data-en="Open to new work in automation, control systems and real-time simulation. Email is the fastest way to reach me.">
+        Otomasyon, kontrol sistemleri ve gerçek zamanlı simülasyon üzerine yeni projelere açığım. En hızlısı e-posta.
+      </p>
+      <div class="contact-row">
+        <a class="btn btn-solid" href="mailto:umutekindemirkol@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          umutekindemirkol@gmail.com
+        </a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/umut-ekin-demirkol" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM2.4 9.5h5.16V21H2.4zM9.9 9.5h4.95v1.57h.07c.69-1.24 2.37-2.03 3.9-2.03 4.17 0 4.94 2.6 4.94 5.98V21h-5.16v-5.06c0-1.21-.02-2.76-1.75-2.76-1.76 0-2.03 1.31-2.03 2.67V21H9.9z"/></svg>
+          LinkedIn
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/KULLANICI-ADIN" target="_blank" rel="noopener" id="gh-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12a11.5 11.5 0 0 0 7.9 10.9c.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.8 2.7 1.3 3.4 1 .1-.7.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.2 11.2 0 0 1 6 0C17.5 4.7 18.5 5 18.5 5c.6 1.6.2 2.8.1 3.1.8.9 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.6 18.4.5 12 .5z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <footer class="wrap" style="padding-left:0; padding-right:0">
+      <span>© <span id="yr">2026</span> Umut Ekin Demirkol</span>
+      <span class="mono" data-tr="Yıldız Teknik Üniversitesi · Kontrol ve Otomasyon Mühendisliği" data-en="Yıldız Technical University · Control and Automation Engineering">Yıldız Teknik Üniversitesi · Kontrol ve Otomasyon Mühendisliği</span>
+    </footer>
+  </div>
+</section>
+
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Görsel">
+  <button class="lb-btn lb-close" id="lb-close" aria-label="Kapat">
+    <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <button class="lb-btn lb-prev" id="lb-prev" aria-label="Önceki">
+    <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <button class="lb-btn lb-next" id="lb-next" aria-label="Sonraki">
+    <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+  <div class="lb-inner">
+    <img class="lb-stage" id="lb-img" alt="">
+    <p class="lb-cap" id="lb-cap"></p>
+    <span class="lb-idx" id="lb-idx"></span>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- language ---------- */
+  var lang = "tr";
+  var btnTr = document.getElementById("btn-tr");
+  var btnEn = document.getElementById("btn-en");
+
+  function applyLang(next){
+    lang = next;
+    document.documentElement.lang = next;
+    var nodes = document.querySelectorAll("[data-tr][data-en]");
+    for (var i = 0; i < nodes.length; i++){
+      var v = nodes[i].getAttribute("data-" + next);
+      if (v !== null) nodes[i].innerHTML = v;
+    }
+    btnTr.setAttribute("aria-pressed", String(next === "tr"));
+    btnEn.setAttribute("aria-pressed", String(next === "en"));
+    if (lb && lb.classList.contains("open")) show(idx);
+    render();
+  }
+  btnTr.addEventListener("click", function(){ applyLang("tr"); });
+  btnEn.addEventListener("click", function(){ applyLang("en"); });
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  /* ---------- lightbox ---------- */
+  var shots = Array.prototype.slice.call(document.querySelectorAll(".shot[data-full]"));
+  var lb = document.getElementById("lb");
+  var lbImg = document.getElementById("lb-img");
+  var lbCap = document.getElementById("lb-cap");
+  var lbIdx = document.getElementById("lb-idx");
+  var idx = 0, lastFocus = null;
+
+  function show(i){
+    idx = (i + shots.length) % shots.length;
+    var s = shots[idx];
+    lbImg.src = s.getAttribute("data-full");
+    lbImg.alt = s.querySelector("img") ? s.querySelector("img").alt : "";
+    lbCap.textContent = s.getAttribute("data-cap-" + lang) || "";
+    lbIdx.textContent = (idx + 1) + " / " + shots.length;
+  }
+  function openLb(i){
+    lastFocus = document.activeElement;
+    show(i);
+    lb.classList.add("open");
+    document.body.style.overflow = "hidden";
+    document.getElementById("lb-close").focus();
+  }
+  function closeLb(){
+    lb.classList.remove("open");
+    lbImg.src = "";
+    document.body.style.overflow = "";
+    if (lastFocus) lastFocus.focus();
+  }
+
+  shots.forEach(function(s, i){
+    s.addEventListener("click", function(){ openLb(i); });
+  });
+  document.getElementById("lb-close").addEventListener("click", closeLb);
+  document.getElementById("lb-prev").addEventListener("click", function(){ show(idx - 1); });
+  document.getElementById("lb-next").addEventListener("click", function(){ show(idx + 1); });
+  lb.addEventListener("click", function(e){ if (e.target === lb) closeLb(); });
+  document.addEventListener("keydown", function(e){
+    if (!lb.classList.contains("open")) return;
+    if (e.key === "Escape") closeLb();
+    else if (e.key === "ArrowLeft") show(idx - 1);
+    else if (e.key === "ArrowRight") show(idx + 1);
+  });
+
+  /* ---------- PID step response ---------- */
+  var canvas = document.getElementById("plot");
+  var ctx = canvas.getContext("2d");
+
+  var kp = document.getElementById("kp");
+  var ki = document.getElementById("ki");
+  var kd = document.getElementById("kd");
+  var kpV = document.getElementById("kp-v");
+  var kiV = document.getElementById("ki-v");
+  var kdV = document.getElementById("kd-v");
+
+  var DEFAULTS = { kp: 14, ki: 4, kd: 3.5 };
+  var T_END = 12, DT = 0.004, U_MAX = 10, SETPOINT = 1;
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var progress = reduceMotion ? 1 : 0;
+  var animStart = null;
+
+  /* Plant: x'' + x' + x = u   (m=1, c=1, k=1)
+     Controller: u = Kp*e + Ki*I - Kd*x'  (derivative on measurement)
+     with actuator saturation and conditional anti-windup. */
+  function simulate(Kp, Ki, Kd){
+    var x = 0, v = 0, I = 0;
+    var n = Math.round(T_END / DT);
+    var pts = new Float64Array(n + 1);
+    pts[0] = 0;
+    for (var i = 1; i <= n; i++){
+      var e = SETPOINT - x;
+      var uRaw = Kp * e + Ki * I - Kd * v;
+      var u = Math.max(-U_MAX, Math.min(U_MAX, uRaw));
+      if (u === uRaw) I += e * DT;                 // anti-windup: freeze when saturated
+      var a = u - v - x;
+      v += a * DT;
+      x += v * DT;
+      if (!isFinite(x) || Math.abs(x) > 1e6){      // diverged
+        for (var j = i; j <= n; j++) pts[j] = NaN;
+        return { pts: pts, diverged: true };
+      }
+      pts[i] = x;
+    }
+    return { pts: pts, diverged: false };
+  }
+
+  function analyze(pts){
+    var n = pts.length - 1;
+    var peak = 0, peakOk = false;
+    for (var i = 0; i <= n; i++){ if (pts[i] > peak){ peak = pts[i]; peakOk = true; } }
+    var overshoot = peakOk ? Math.max(0, (peak - SETPOINT) / SETPOINT * 100) : NaN;
+
+    var t10 = NaN, t90 = NaN;
+    for (var a = 0; a <= n; a++){ if (isNaN(t10) && pts[a] >= 0.1 * SETPOINT) t10 = a * DT;
+                                  if (isNaN(t90) && pts[a] >= 0.9 * SETPOINT){ t90 = a * DT; break; } }
+    var rise = (isNaN(t10) || isNaN(t90)) ? NaN : t90 - t10;
+
+    var settle = NaN;
+    for (var b = n; b >= 0; b--){
+      if (Math.abs(pts[b] - SETPOINT) > 0.02 * SETPOINT){ settle = (b + 1) * DT; break; }
+    }
+    if (isNaN(settle)) settle = 0;
+    if (settle >= T_END) settle = NaN;
+
+    return { overshoot: overshoot, rise: rise, settle: settle };
+  }
+
+  function fmt(val, unit){
+    if (val === null || val === undefined || isNaN(val)) return "—";
+    return val.toFixed(unit === "%" ? 1 : 2) + (unit === "%" ? " %" : " s");
+  }
+
+  function css(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+  function fit(){
+    var r = canvas.getBoundingClientRect();
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width  = Math.max(1, Math.round(r.width  * dpr));
+    canvas.height = Math.max(1, Math.round(r.height * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { w: r.width, h: r.height };
+  }
+
+  function render(){
+    var size = fit();
+    var W = size.w, H = size.h;
+    var padL = 34, padR = 12, padT = 14, padB = 22;
+    var pw = W - padL - padR, ph = H - padT - padB;
+
+    var Kp = parseFloat(kp.value), Ki = parseFloat(ki.value), Kd = parseFloat(kd.value);
+    kpV.textContent = Kp.toFixed(1);
+    kiV.textContent = Ki.toFixed(1);
+    kdV.textContent = Kd.toFixed(1);
+
+    var sim = simulate(Kp, Ki, Kd);
+    var pts = sim.pts;
+    var m = analyze(pts);
+
+    document.getElementById("m-os").textContent = sim.diverged ? "∞" : fmt(m.overshoot, "%");
+    document.getElementById("m-ts").textContent = sim.diverged ? "—" : fmt(m.settle, "s");
+    document.getElementById("m-tr").textContent = sim.diverged ? "—" : fmt(m.rise, "s");
+
+    var yMax = 1.4;
+    for (var i = 0; i < pts.length; i++){
+      if (isFinite(pts[i]) && pts[i] + 0.2 > yMax) yMax = Math.min(pts[i] + 0.2, 3.0);
+    }
+    var yMin = -0.18;
+
+    var X = function(t){ return padL + (t / T_END) * pw; };
+    var Y = function(y){ return padT + ph - ((y - yMin) / (yMax - yMin)) * ph; };
+
+    ctx.clearRect(0, 0, W, H);
+
+    // grid
+    ctx.strokeStyle = css("--line-soft");
+    ctx.lineWidth = 1;
+    ctx.fillStyle = css("--muted");
+    ctx.font = '10px "IBM Plex Mono", monospace';
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    for (var gy = 0; gy <= Math.floor(yMax); gy += (yMax > 2.4 ? 1 : 0.5)){
+      var py = Y(gy);
+      ctx.beginPath(); ctx.moveTo(padL, py); ctx.lineTo(W - padR, py); ctx.stroke();
+      ctx.fillText(gy.toFixed(1), padL - 7, py);
+    }
+    ctx.textAlign = "center"; ctx.textBaseline = "top";
+    for (var gt = 0; gt <= T_END; gt += 3){
+      var px = X(gt);
+      ctx.beginPath(); ctx.moveTo(px, padT); ctx.lineTo(px, padT + ph); ctx.stroke();
+      if (gt > 0) ctx.fillText(gt + "s", px, padT + ph + 5);
+    }
+
+    // ±2% settling band
+    ctx.fillStyle = "rgba(176,124,247,.08)";
+    ctx.fillRect(padL, Y(SETPOINT * 1.02), pw, Y(SETPOINT * 0.98) - Y(SETPOINT * 1.02));
+
+    // setpoint
+    ctx.strokeStyle = css("--setpoint");
+    ctx.setLineDash([5, 4]);
+    ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.moveTo(padL, Y(SETPOINT)); ctx.lineTo(W - padR, Y(SETPOINT)); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // response
+    var last = Math.floor((pts.length - 1) * progress);
+    var step = Math.max(1, Math.floor(pts.length / (pw * 2)));
+    ctx.strokeStyle = css("--signal");
+    ctx.lineWidth = 2;
+    ctx.lineJoin = "round";
+    ctx.beginPath();
+    var started = false;
+    for (var k = 0; k <= last; k += step){
+      var y = pts[k];
+      if (!isFinite(y)) break;
+      var cy = Math.max(padT - 40, Math.min(padT + ph + 40, Y(y)));
+      if (!started){ ctx.moveTo(X(k * DT), cy); started = true; }
+      else ctx.lineTo(X(k * DT), cy);
+    }
+    ctx.stroke();
+
+    if (sim.diverged){
+      ctx.fillStyle = css("--amber");
+      ctx.font = '500 12px "IBM Plex Sans", sans-serif';
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(lang === "tr" ? "Sistem kararsız" : "System unstable", padL + pw / 2, padT + ph / 2);
+    }
+  }
+
+  function animate(ts){
+    if (animStart === null) animStart = ts;
+    var t = Math.min(1, (ts - animStart) / 1100);
+    progress = 1 - Math.pow(1 - t, 3);
+    render();
+    if (t < 1) requestAnimationFrame(animate);
+  }
+
+  [kp, ki, kd].forEach(function(el){
+    el.addEventListener("input", function(){ progress = 1; render(); });
+  });
+
+  document.getElementById("reset").addEventListener("click", function(){
+    kp.value = DEFAULTS.kp; ki.value = DEFAULTS.ki; kd.value = DEFAULTS.kd;
+    progress = 1; render();
+  });
+
+  var rt;
+  window.addEventListener("resize", function(){
+    clearTimeout(rt);
+    rt = setTimeout(render, 120);
+  });
+
+  render();
+  if (!reduceMotion) requestAnimationFrame(animate);
+
+  /* ---------- video tiles (mp4 varsa etkinleşir) ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll(".shot--video"), function(tile){
+    var v = tile.querySelector("video");
+    if (!v) return;
+
+    // Kaynak yüklenemezse karo sessizce poster olarak kalır.
+    v.addEventListener("loadedmetadata", function(){ tile.classList.add("ready"); });
+
+    function play(){
+      if (!tile.classList.contains("ready")) return;
+      var p = v.play();
+      if (p && p.catch) p.catch(function(){});
+      tile.classList.add("playing");
+    }
+    function pause(){
+      if (!tile.classList.contains("ready")) return;
+      v.pause(); v.currentTime = 0;
+      tile.classList.remove("playing");
+    }
+
+    tile.addEventListener("mouseenter", play);
+    tile.addEventListener("mouseleave", pause);
+    tile.addEventListener("click", function(){
+      if (!tile.classList.contains("ready")) return;
+      if (v.paused) play(); else pause();
+    });
+  });
+
+  /* ---------- animated schematics ---------- */
+  (function(){
+    var VW = 480, VH = 206;                 // virtual drawing space (21:9)
+    var tiles = Array.prototype.slice.call(document.querySelectorAll("[data-scene]"));
+    if (!tiles.length) return;
+
+    var C = { sig:"#4cc9f0", set:"#b07cf7", amber:"#f2b544",
+              line:"#1e2c44", muted:"#8b9cb6", ink:"#e8eef8" };
+
+    function prep(cv){
+      var r = cv.getBoundingClientRect();
+      if (!r.width) return null;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = Math.round(r.width * dpr), h = Math.round(r.width / (VW / VH) * dpr);
+      if (cv.width !== w || cv.height !== h){ cv.width = w; cv.height = h; }
+      var g = cv.getContext("2d");
+      g.setTransform(1, 0, 0, 1, 0, 0);
+      g.clearRect(0, 0, cv.width, cv.height);
+      g.scale(cv.width / VW, cv.width / VW);
+      return g;
+    }
+
+    function rrect(g, x, y, w, h, r){
+      r = Math.min(r, w / 2, h / 2);
+      g.beginPath();
+      g.moveTo(x + r, y);
+      g.arcTo(x + w, y, x + w, y + h, r);
+      g.arcTo(x + w, y + h, x, y + h, r);
+      g.arcTo(x, y + h, x, y, r);
+      g.arcTo(x, y, x + w, y, r);
+      g.closePath();
+    }
+
+    function dots(g){
+      g.fillStyle = "rgba(30,44,68,.6)";
+      for (var x = 14; x < VW; x += 22)
+        for (var y = 14; y < VH; y += 22){ g.fillRect(x, y, 1.3, 1.3); }
+    }
+
+    /* ===== scene: object detection ===== */
+    var targets = [
+      { x:  70, y: 58, w: 39, h: 92, vx:  21, cls: "person", base: 0.93, ph: 0.0 },
+      { x: 272, y: 92, w: 78, h: 53, vx: -13, cls: "animal", base: 0.82, ph: 1.9 },
+      { x: 404, y: 72, w: 34, h: 79, vx:  16, cls: "person", base: 0.88, ph: 3.4 }
+    ];
+
+    function brackets(g, x, y, w, h, col){
+      var L = Math.min(9, w * 0.34, h * 0.26);
+      g.strokeStyle = col; g.lineWidth = 1.6; g.lineCap = "round";
+      var c = [[x,y,1,1],[x+w,y,-1,1],[x,y+h,1,-1],[x+w,y+h,-1,-1]];
+      for (var i = 0; i < 4; i++){
+        g.beginPath();
+        g.moveTo(c[i][0] + c[i][2] * L, c[i][1]);
+        g.lineTo(c[i][0], c[i][1]);
+        g.lineTo(c[i][0], c[i][1] + c[i][3] * L);
+        g.stroke();
+      }
+    }
+
+    function chip(g, x, y, text, col){
+      g.font = '600 10px "IBM Plex Mono", monospace';
+      var w = g.measureText(text).width + 10;
+      g.fillStyle = col;
+      rrect(g, x, y - 14, w, 14, 3); g.fill();
+      g.fillStyle = "#04121c";
+      g.textAlign = "left"; g.textBaseline = "middle";
+      g.fillText(text, x + 5, y - 6.5);
+    }
+
+    function drawDetect(g, t){
+      dots(g);
+
+      var sy = (t * 30) % (VH + 40) - 20;
+      var grd = g.createLinearGradient(0, sy - 18, 0, sy + 18);
+      grd.addColorStop(0, "rgba(76,201,240,0)");
+      grd.addColorStop(0.5, "rgba(76,201,240,.11)");
+      grd.addColorStop(1, "rgba(76,201,240,0)");
+      g.fillStyle = grd; g.fillRect(0, sy - 18, VW, 36);
+
+      var a = targets[0];
+      var gh = Math.max(0, Math.sin(t * 0.75)) * 0.42;
+      if (gh > 0.02){
+        g.save(); g.globalAlpha = gh;
+        g.strokeStyle = C.amber; g.lineWidth = 1; g.setLineDash([3, 3]);
+        g.strokeRect(a.x + 9, a.y + 7, a.w * 1.1, a.h * 1.06);
+        g.setLineDash([]); g.restore();
+      }
+
+      for (var i = 0; i < targets.length; i++){
+        var o = targets[i];
+        var yy = o.y + Math.sin(t * 0.9 + o.ph) * 5;
+        var conf = Math.min(0.99, o.base + Math.sin(t * 1.6 + o.ph) * 0.035);
+        var col = o.cls === "person" ? C.sig : C.set;
+
+        g.save(); g.globalAlpha = 0.11; g.fillStyle = col;
+        g.fillRect(o.x, yy, o.w, o.h); g.restore();
+
+        brackets(g, o.x, yy, o.w, o.h, col);
+        chip(g, o.x, yy - 3, o.cls + " " + conf.toFixed(2), col);
+
+        g.fillStyle = col;
+        g.beginPath(); g.arc(o.x + o.w / 2, yy + o.h / 2, 1.9, 0, 6.284); g.fill();
+      }
+
+      g.font = '400 10px "IBM Plex Mono", monospace';
+      g.textBaseline = "top"; g.textAlign = "left";
+      g.fillStyle = C.muted;
+      g.fillText("imgsz 320 · conf 0.60 · NMS 0.70", 11, 10);
+      g.textAlign = "right"; g.fillStyle = C.sig;
+      g.fillText((28 + Math.round(Math.sin(t * 2.1) * 2)) + " FPS", VW - 11, 10);
+    }
+
+    /* ===== scene: production line ===== */
+    var BELT_Y = 96, BELT_H = 28, BELT_X0 = 30, BELT_X1 = 450;
+    var SENSOR_X = 330, BOX_W = 29, BOX_H = 24, GAP = 106, SPEED = 47;
+    var boxes = [0, 1, 2, 3, 4, 5].map(function(i){ return { x: BELT_X0 - 60 + i * GAP }; });
+    var count = 137, wasBroken = false, shift = [0, 0, 0, 0];
+
+    function drawLine(g, t, dt){
+      dots(g);
+
+      g.fillStyle = "#0e1626";
+      rrect(g, BELT_X0, BELT_Y, BELT_X1 - BELT_X0, BELT_H, 5); g.fill();
+      g.strokeStyle = C.line; g.lineWidth = 1; g.stroke();
+
+      g.save();
+      rrect(g, BELT_X0, BELT_Y, BELT_X1 - BELT_X0, BELT_H, 5); g.clip();
+      g.strokeStyle = "rgba(76,201,240,.15)"; g.lineWidth = 1.5;
+      var off = (t * SPEED) % 15;
+      for (var hx = BELT_X0 - 30; hx < BELT_X1 + 30; hx += 15){
+        g.beginPath();
+        g.moveTo(hx + off, BELT_Y + BELT_H); g.lineTo(hx + off + 11, BELT_Y);
+        g.stroke();
+      }
+      g.restore();
+
+      g.fillStyle = C.line;
+      for (var rx = BELT_X0 + 8; rx < BELT_X1; rx += 30){
+        g.beginPath(); g.arc(rx, BELT_Y + BELT_H + 5, 2.2, 0, 6.284); g.fill();
+      }
+
+      var broken = false;
+      for (var i = 0; i < boxes.length; i++){
+        var b = boxes[i];
+        b.x += SPEED * dt;
+        if (b.x > BELT_X1 + 30) b.x -= boxes.length * GAP;
+        var bx = b.x, by = BELT_Y - BOX_H;
+        if (bx + BOX_W > SENSOR_X && bx < SENSOR_X) broken = true;
+        if (bx < BELT_X0 - 35 || bx > BELT_X1 + 5) continue;
+
+        g.fillStyle = "#16283f";
+        rrect(g, bx, by, BOX_W, BOX_H, 2.5); g.fill();
+        g.strokeStyle = C.sig; g.lineWidth = 1; g.stroke();
+        g.strokeStyle = "rgba(76,201,240,.35)";
+        g.beginPath();
+        g.moveTo(bx + 5, by + BOX_H / 2); g.lineTo(bx + BOX_W - 5, by + BOX_H / 2);
+        g.stroke();
+      }
+
+      if (broken && !wasBroken){ count++; shift.unshift(1); shift.pop(); }
+      if (!broken && wasBroken){ shift.unshift(0); shift.pop(); }
+      wasBroken = broken;
+
+      g.strokeStyle = broken ? C.amber : "rgba(76,201,240,.5)";
+      g.lineWidth = broken ? 1.6 : 1;
+      g.setLineDash(broken ? [] : [2.5, 4]);
+      g.beginPath(); g.moveTo(SENSOR_X, 48); g.lineTo(SENSOR_X, BELT_Y + BELT_H); g.stroke();
+      g.setLineDash([]);
+      g.fillStyle = broken ? C.amber : C.line;
+      rrect(g, SENSOR_X - 7, 38, 14, 11, 2.5); g.fill();
+
+      g.font = '400 10px "IBM Plex Mono", monospace';
+      g.textAlign = "center"; g.textBaseline = "bottom";
+      g.fillStyle = broken ? C.amber : C.muted;
+      g.fillText("%IX0.0", SENSOR_X, 33);
+
+      g.textAlign = "right"; g.textBaseline = "top";
+      g.fillStyle = C.muted;
+      g.font = '400 9px "IBM Plex Mono", monospace';
+      g.fillText("PARÇA", VW - 12, 12);
+      g.fillStyle = C.ink;
+      g.font = '500 18px "IBM Plex Mono", monospace';
+      g.fillText(String(count).padStart(4, "0"), VW - 12, 23);
+
+      g.font = '400 9px "IBM Plex Mono", monospace';
+      g.textAlign = "left"; g.textBaseline = "middle";
+      g.fillStyle = C.muted;
+      g.fillText("SHIFT", BELT_X0, 150);
+      for (var k = 0; k < 4; k++){
+        var sx = BELT_X0 + 34 + k * 16;
+        g.fillStyle = shift[k] ? C.sig : "#101c2e";
+        rrect(g, sx, 144, 11, 11, 2.5); g.fill();
+        g.strokeStyle = shift[k] ? C.sig : C.line; g.lineWidth = 1; g.stroke();
+      }
+
+      g.textAlign = "right"; g.textBaseline = "middle";
+      g.fillStyle = C.sig;
+      g.fillText("%QX0.0  ON", BELT_X1, 150);
+    }
+
+    /* ===== scene: grid frequency & primary control ===== */
+    /* Yük değişimi frekansı 50 Hz'den kaydırır; droop (birincil) kontrol geri çeker.
+       Salınımlı ikinci derece model — gerçek ölçüm değil, davranışı gösteren simülasyon. */
+    var HIST = 150, hist = [], dev = 0, vel = 0, load = 0, acc = 0, sampleT = 0;
+    for (var q = 0; q < HIST; q++) hist.push(0);
+    var warmed = false;
+
+    function stepGrid(dt){
+      // sürekli küçük yük dalgalanması
+      if (Math.random() < dt * 3.0) load += (Math.random() - 0.5) * 0.10;
+      // ara sıra büyük yük adımı (jeneratör/yük devreye girer-çıkar)
+      if (Math.random() < dt * 0.12) load += (Math.random() < 0.5 ? -1 : 1) * (0.22 + Math.random() * 0.16);
+      load *= (1 - 0.5 * dt);                          // ikincil kontrol yükü dengeler
+      load = Math.max(-0.45, Math.min(0.45, load));
+
+      acc = (-load - 7.5 * dev - 2.4 * vel) / 1.0;     // droop + sönümleme / atalet
+      vel += acc * dt;
+      dev += vel * dt;
+      dev = Math.max(-0.14, Math.min(0.14, dev));
+
+      sampleT += dt;
+      while (sampleT > 0.055){
+        sampleT -= 0.055;
+        hist.push(dev); hist.shift();
+      }
+    }
+
+    function warmGrid(){
+      if (warmed) return;
+      warmed = true;
+      for (var w = 0; w < 1400; w++) stepGrid(1 / 60);   // iz dolu başlasın
+    }
+
+    function drawGrid(g, t, dt){
+      warmGrid();
+      var padL = 12, padR = 56, padT = 50, padB = 46;
+      var pw = VW - padL - padR, ph = VH - padT - padB;
+      var span = 0.07;                                  // ±70 mHz görünür aralık
+      var Y = function(d){ return padT + ph / 2 - (d / span) * (ph / 2); };
+
+      // ölçek çizgileri
+      g.strokeStyle = "rgba(30,44,68,.9)"; g.lineWidth = 1;
+      g.font = '400 9px "IBM Plex Mono", monospace';
+      g.textAlign = "left"; g.textBaseline = "middle";
+      [0.04, -0.04].forEach(function(d){
+        var y = Y(d);
+        g.beginPath(); g.moveTo(padL, y); g.lineTo(padL + pw, y); g.stroke();
+        g.fillStyle = "#4a586e";
+        g.fillText((50 + d).toFixed(2), padL + pw + 6, y);
+      });
+
+      // ölü bant ±0.02 Hz
+      g.fillStyle = "rgba(176,124,247,.10)";
+      g.fillRect(padL, Y(0.02), pw, Y(-0.02) - Y(0.02));
+
+      // 50.00 Hz referansı
+      g.strokeStyle = C.set; g.lineWidth = 1.2; g.setLineDash([4, 4]);
+      g.beginPath(); g.moveTo(padL, Y(0)); g.lineTo(padL + pw, Y(0)); g.stroke();
+      g.setLineDash([]);
+
+      // frekans izi
+      var out = Math.abs(dev) > 0.04;
+      g.strokeStyle = out ? C.amber : C.sig;
+      g.lineWidth = 1.6; g.lineJoin = "round";
+      g.beginPath();
+      for (var i = 0; i < HIST; i++){
+        var x = padL + (i / (HIST - 1)) * pw;
+        var y = Math.max(padT - 6, Math.min(padT + ph + 6, Y(hist[i])));
+        if (i === 0) g.moveTo(x, y); else g.lineTo(x, y);
+      }
+      g.stroke();
+
+      // izin ucundaki nokta
+      var hx = padL + pw, hy = Math.max(padT - 6, Math.min(padT + ph + 6, Y(hist[HIST - 1])));
+      g.fillStyle = out ? C.amber : C.sig;
+      g.beginPath(); g.arc(hx, hy, 2.4, 0, 6.284); g.fill();
+
+      // okumalar
+      g.textAlign = "right"; g.textBaseline = "top";
+      g.fillStyle = C.muted;
+      g.font = '400 9px "IBM Plex Mono", monospace';
+      g.fillText("ŞEBEKE FREKANSI", VW - 12, 12);
+      g.fillStyle = out ? C.amber : C.ink;
+      g.font = '500 20px "IBM Plex Mono", monospace';
+      g.fillText((50 + dev).toFixed(2), VW - 44, 23);
+      g.fillStyle = C.muted;
+      g.font = '400 10px "IBM Plex Mono", monospace';
+      g.fillText("Hz", VW - 12, 31);
+
+      g.textAlign = "left"; g.textBaseline = "top";
+      g.fillStyle = C.muted;
+      g.font = '400 9px "IBM Plex Mono", monospace';
+      g.fillText("SAPMA", padL, 12);
+      g.fillStyle = out ? C.amber : C.sig;
+      g.fillText((dev >= 0 ? "+" : "") + Math.round(dev * 1000) + " mHz", padL + 42, 12);
+
+      g.fillStyle = "#4a586e";
+      g.fillText("droop R = 4%  ·  ölü bant ±20 mHz", padL, 29);
+    }
+
+    /* ===== shared loop ===== */
+    var t0 = performance.now(), prev = t0, running = false, visible = [], lastT = 0;
+
+    function paint(cv, t, dt){
+      var g = prep(cv);
+      if (!g) return;
+      var s = cv.getAttribute("data-scene");
+      if (s === "detect") drawDetect(g, t);
+      else if (s === "grid") drawGrid(g, t, dt);
+      else drawLine(g, t, dt);
+    }
+
+    function frame(now){
+      lastT = (now - t0) / 1000;
+      var dt = Math.min((now - prev) / 1000, 0.05);
+      prev = now;
+      stepGrid(dt);
+      for (var i = 0; i < tiles.length; i++){
+        if (visible.indexOf(tiles[i]) !== -1) paint(tiles[i], lastT, dt);
+      }
+      for (var j = 0; j < targets.length; j++){
+        var o = targets[j];
+        o.x += o.vx * dt;
+        if (o.x > VW + 20) o.x = -o.w - 20;
+        if (o.x < -o.w - 20) o.x = VW + 20;
+      }
+      if (running) requestAnimationFrame(frame);
+    }
+
+    function repaintAll(){ tiles.forEach(function(cv){ paint(cv, lastT, 0); }); }
+
+    function start(){
+      if (running || !visible.length) return;
+      running = true; prev = performance.now();
+      requestAnimationFrame(frame);
+    }
+    function stop(){ running = false; }
+
+    if (reduceMotion){
+      repaintAll();
+      window.addEventListener("resize", repaintAll);
+      return;
+    }
+
+    if ("IntersectionObserver" in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          var i = visible.indexOf(e.target);
+          if (e.isIntersecting && i === -1) visible.push(e.target);
+          else if (!e.isIntersecting && i !== -1) visible.splice(i, 1);
+        });
+        if (visible.length) start(); else stop();
+      }, { rootMargin: "120px" });
+      tiles.forEach(function(cv){ io.observe(cv); });
+    } else {
+      visible = tiles.slice(); start();
+    }
+
+    document.addEventListener("visibilitychange", function(){
+      if (document.hidden) stop(); else start();
+    });
+
+    var art;
+    window.addEventListener("resize", function(){
+      clearTimeout(art);
+      art = setTimeout(function(){ if (!running) repaintAll(); }, 120);
+    });
+  })();
+
+})();
+</script>
 </body>
 </html>
