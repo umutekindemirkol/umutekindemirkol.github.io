@@ -460,16 +460,18 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
     <div>
       <span class="loc"><span class="dot"></span>İstanbul, Türkiye</span>
 
-      <h1 data-tr="Fiziksel sistemlerin ardındaki kontrol mimarilerini geliştiriyor; bu sistemleri yazılım, test ve simülasyon ortamlarında uçtan uca doğruluyorum."
-          data-en="Developing the control architectures behind physical systems; verifying them end-to-end through software, testing, and simulation.">
-        Fiziksel sistemleri, onları çalıştıran yazılımla birlikte tasarlıyorum.
-      </h1>
+     <h1 class="hero-title"
+    data-tr="Kontrol mimarileri tasarlıyor; sistemleri yazılım ve simülasyonla uçtan uca doğruluyorum."
+    data-en="Designing control architectures; validating systems end-to-end through software and simulation.">
+  Kontrol mimarileri tasarlıyor; sistemleri yazılım ve simülasyonla uçtan uca doğruluyorum.
+</h1>
 
-     <p class="lede"
-   data-tr="Yıldız Teknik Üniversitesi Kontrol ve Otomasyon Mühendisliği son sınıf öğrencisiyim. Mekanik tasarımdan ziyade sistemlerin 'beynini' kurguluyor; PLC mantığından dijital ikizlere, saha haberleşmesinden dinamik arayüzlere kadar endüstriyel kontrol zincirinin yazılım ve doğrulama aşamalarında çözümler üretiyorum."
-   data-en="I am a senior Control and Automation Engineering student at Yıldız Technical University. Rather than mechanical design, I focus on building the 'brains' of systems. From PLC logic to digital twins, and fieldbus communication to dynamic interfaces, I deliver solutions across the software and validation stages of the industrial control chain.">
-  Yıldız Teknik Üniversitesi Kontrol ve Otomasyon Mühendisliği son sınıf öğrencisiyim. PLC mantığından dijital ikizlere, saha veri yolundan SCADA ekranına kadar kontrol zincirinin tamamında çalışıyorum.
+<p class="lede"
+   data-tr="Yıldız Teknik Üniversitesi Kontrol ve Otomasyon Mühendisliği son sınıf öğrencisiyim. PLC mantığından web arayüzlerine kadar uzanan bir yelpazede; sahadaki donanımları modern yazılım teknolojileriyle konuşturan uçtan uca otomasyon projeleri üretiyorum."
+   data-en="I am a senior Control and Automation Engineering student at Yıldız Technical University. Ranging from PLC logic to web interfaces, I build end-to-end automation projects that make field hardware talk to modern software technologies.">
+  Yıldız Teknik Üniversitesi Kontrol ve Otomasyon Mühendisliği son sınıf öğrencisiyim. PLC mantığından web arayüzlerine kadar uzanan bir yelpazede; sahadaki donanımları modern yazılım teknolojileriyle konuşturan uçtan uca otomasyon projeleri üretiyorum.
 </p>
+      
       <div class="tags">
         <span class="tag t-sig" data-tr="Endüstriyel Otomasyon" data-en="Industrial Automation">Endüstriyel Otomasyon</span>
         <span class="tag t-set" data-tr="Dijital İkiz" data-en="Digital Twin">Dijital İkiz</span>
@@ -646,14 +648,15 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
   <div class="wrap">
     <div class="sec-head">
       <h2 data-tr="Projeler" data-en="Projects">Projeler</h2>
-      <p data-tr="Hepsinin ortak noktası aynı: bir fiziksel süreci modelle, kontrol et, sonra gerçek donanıma karşı doğrula."
-         data-en="They all share the same shape: model a physical process, control it, then validate against real hardware.">
-        Hepsinin ortak noktası aynı: bir fiziksel süreci modelle, kontrol et, sonra gerçek donanıma karşı doğrula.
+      <p data-tr="Odağım hep aynı: Fiziksel süreçleri dijitalde modelle, kontrol algoritmalarını kurgula ve gerçeğe en yakın simülasyonlarla doğrula."
+         data-en="My focus is always the same: digitally model physical processes, design control algorithms, and validate them with near-real-world simulations.">
+        Odağım hep aynı: Fiziksel süreçleri dijitalde modelle, kontrol algoritmalarını kurgula ve gerçeğe en yakın simülasyonlarla doğrula.
       </p>
     </div>
 
     <div class="projects">
 
+      <!-- PROJE 1: TÜBİTAK -->
       <article class="card wide with-media">
         <div>
         <div class="card-tags">
@@ -664,9 +667,9 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
           <span class="tag t-set">TÜBİTAK</span>
         </div>
         <h3 data-tr="Gemi Dijital İkizi ve Sefer Optimizasyonu" data-en="Ship Digital Twin &amp; Voyage Optimization">Gemi Dijital İkizi ve Sefer Optimizasyonu</h3>
-        <p data-tr="Bir geminin tahrik sistemini gerçek zamanlı olarak simüle eden fizik motoru. Model, ölçülmüş deniz motoru test verisine karşı doğrulandı; simülasyon durumu UDP üzerinden LabVIEW operatör arayüzüne akıyor. Üzerine kurduğum optimizasyon katmanı, aday rotaları <b>hız, yakıt tüketimi ve emisyon</b> ekseninde puanlıyor. Ayrıca ses sinyalini doğrudan canlı simülasyon durumundan üreten motor sesi modülünü de geliştirdim."
-           data-en="A physics engine simulating a ship's propulsion system in real time. The model is validated against measured marine engine test data, and simulation state streams to a LabVIEW operator interface over UDP. The optimization layer on top scores candidate routes on <b>speed, fuel consumption and emissions</b>. I also built the engine sound module that generates its audio signal directly from live simulation state.">
-          Bir geminin tahrik sistemini gerçek zamanlı olarak simüle eden fizik motoru. Model, ölçülmüş deniz motoru test verisine karşı doğrulandı; simülasyon durumu UDP üzerinden LabVIEW operatör arayüzüne akıyor. Üzerine kurduğum optimizasyon katmanı, aday rotaları <b>hız, yakıt tüketimi ve emisyon</b> ekseninde puanlıyor. Ayrıca ses sinyalini doğrudan canlı simülasyon durumundan üreten motor sesi modülünü de geliştirdim.
+        <p data-tr="GDS Engineering R&amp;D'de baş geliştirici olarak yürüttüğüm TÜBİTAK destekli endüstriyel projem. Bir geminin tahrik sistemini gerçek zamanlı simüle eden fizik motorunu <b>Python</b>'da sıfırdan kurup test verileriyle doğruladım. Simülasyon durumunu <b>UDP</b> üzerinden <b>LabVIEW</b> arayüzüne aktarıyor; seferleri hız ve emisyon ekseninde optimize ediyorum. Canlı simülasyon verisinden anlık motor sesi üreten modülü de tek başıma geliştirdim."
+           data-en="An industrial TÜBİTAK-supported project I lead professionally at GDS Engineering R&amp;D. I built a physics engine in <b>Python</b> that simulates a ship's propulsion system in real-time and validated it against test data. The state streams to a <b>LabVIEW</b> interface via <b>UDP</b>, where I optimize voyages for speed and emissions. I also solely developed a module that generates live engine audio directly from the simulation state.">
+          GDS Engineering R&amp;D'de baş geliştirici olarak yürüttüğüm TÜBİTAK destekli endüstriyel projem. Bir geminin tahrik sistemini gerçek zamanlı simüle eden fizik motorunu <b>Python</b>'da sıfırdan kurup test verileriyle doğruladım. Simülasyon durumunu <b>UDP</b> üzerinden <b>LabVIEW</b> arayüzüne aktarıyor; seferleri hız ve emisyon ekseninde optimize ediyorum. Canlı simülasyon verisinden anlık motor sesi üreten modülü de tek başıma geliştirdim.
         </p>
         <div class="card-meta" data-tr="GDS Engineering R&amp;D · Baş geliştirici · Devam ediyor" data-en="GDS Engineering R&amp;D · Lead developer · Ongoing">GDS Engineering R&amp;D · Baş geliştirici · Devam ediyor</div>
         </div>
@@ -688,6 +691,7 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
         </div>
       </article>
 
+      <!-- PROJE 2: YOLO -->
       <article class="card">
         <div class="tile banner">
           <canvas data-scene="detect" aria-label="Nesne tespiti şeması: hedefleri takip eden sınırlayıcı kutular" role="img"></canvas>
@@ -700,13 +704,14 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
           <span class="tag t-sig">RTSP</span>
         </div>
         <h3 data-tr="Görü Tabanlı Tespit ve Kontrol Sistemi" data-en="Vision-Based Detection &amp; Control System">Görü Tabanlı Tespit ve Kontrol Sistemi</h3>
-        <p data-tr="Yeniden yapılandırılmış iki sınıflı bir veri seti üzerinde eğitilmiş <b>YOLOv8-Nano</b> modeli (~6 MB) ile gerçek zamanlı çıkarım. Python/OpenCV hattı canlı kamera görüntüsünü RTSP üzerinden çekip kare kare işliyor. Paralel olarak MATLAB &amp; Simulink'te quadrotor uçuş dinamiğini modelliyor; kararlı ve enerji açısından optimum uçuş için <b>PID, doğrusal olmayan PID ve LQR</b> kontrolcülerini karşılaştırıyorum."
-           data-en="Real-time inference with a <b>YOLOv8-Nano</b> model (~6 MB) trained on a restructured two-class dataset. A Python/OpenCV pipeline pulls the live camera feed over RTSP and runs detection frame by frame. In parallel, I model quadrotor flight dynamics in MATLAB &amp; Simulink, comparing <b>PID, nonlinear PID and LQR</b> for stable, energy-optimal flight.">
-          Yeniden yapılandırılmış iki sınıflı bir veri seti üzerinde eğitilmiş <b>YOLOv8-Nano</b> modeli (~6 MB) ile gerçek zamanlı çıkarım. Python/OpenCV hattı canlı kamera görüntüsünü RTSP üzerinden çekip kare kare işliyor. Paralel olarak MATLAB &amp; Simulink'te quadrotor uçuş dinamiğini modelliyor; kararlı ve enerji açısından optimum uçuş için <b>PID, doğrusal olmayan PID ve LQR</b> kontrolcülerini karşılaştırıyorum.
+        <p data-tr="Özel bir veri setiyle eğittiğim <b>YOLOv8-Nano</b> modeli ile gerçek zamanlı çıkarım yapan gözetim sistemi. Python ve OpenCV kullanarak RTSP üzerinden IP kamera akışını işliyor; hedef tespit edildiğinde <b>Telegram botu</b> entegrasyonu ile anlık uyarı ve fotoğraf gönderiyorum. Eş zamanlı olarak MATLAB &amp; Simulink'te drone uçuş dinamiğini modelliyor, optimum uçuş için <b>PID, non-lineer PID ve LQR</b> kontrolcülerini kıyaslıyorum."
+           data-en="A real-time surveillance system running on a <b>YOLOv8-Nano</b> model trained with a custom dataset. Using Python and OpenCV, it processes live RTSP IP camera feeds; upon target detection, an integrated <b>Telegram bot</b> instantly dispatches alerts and photos. Concurrently, I model quadrotor flight dynamics in MATLAB &amp; Simulink, benchmarking <b>PID, non-linear PID, and LQR</b> controllers for optimal flight.">
+          Özel bir veri setiyle eğittiğim <b>YOLOv8-Nano</b> modeli ile gerçek zamanlı çıkarım yapan gözetim sistemi. Python ve OpenCV kullanarak RTSP üzerinden IP kamera akışını işliyor; hedef tespit edildiğinde <b>Telegram botu</b> entegrasyonu ile anlık uyarı ve fotoğraf gönderiyorum. Eş zamanlı olarak MATLAB &amp; Simulink'te drone uçuş dinamiğini modelliyor, optimum uçuş için <b>PID, non-lineer PID ve LQR</b> kontrolcülerini kıyaslıyorum.
         </p>
         <div class="card-meta" data-tr="Kişisel proje · Devam ediyor" data-en="Personal project · Ongoing">Kişisel proje · Devam ediyor</div>
       </article>
 
+      <!-- PROJE 3: FACTORY I/O & SCADA -->
       <article class="card">
         <div class="tile banner">
           <canvas data-scene="line" aria-label="Üretim hattı şeması: konveyör, fotosel sensörü ve PLC giriş-çıkış bitleri" role="img"></canvas>
@@ -719,13 +724,14 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
           <span class="tag t-sig">Factory I/O</span>
         </div>
         <h3 data-tr="Akıllı Fabrika Otomasyonu ve SCADA" data-en="Smart Factory Automation &amp; SCADA">Akıllı Fabrika Otomasyonu ve SCADA</h3>
-        <p data-tr="Factory I/O sanal üretim hattına karşı doğrulanan CODESYS kontrol mantığı. Üzerine MQTT ve Modbus TCP/IP ile bağlanan bir <b>Ignition SCADA/HMI</b> katmanı kuruyorum; amaç, saha cihazından denetim ekranına kadar uçtan uca izlenebilir bir hat."
-           data-en="CODESYS control logic validated against a Factory I/O virtual production line, with an <b>Ignition SCADA/HMI</b> layer linked over MQTT and Modbus TCP/IP — an end-to-end traceable line from field device to supervisory screen.">
-          Factory I/O sanal üretim hattına karşı doğrulanan CODESYS kontrol mantığı. Üzerine MQTT ve Modbus TCP/IP ile bağlanan bir <b>Ignition SCADA/HMI</b> katmanı kuruyorum; amaç, saha cihazından denetim ekranına kadar uçtan uca izlenebilir bir hat.
+        <p data-tr="Sahadaki cihazları SCADA ve web teknolojileriyle konuşturan uçtan uca otomasyon mimarisi. Factory I/O sanal fabrikasında doğruladığım <b>CODESYS</b> kontrol mantığını; <b>MQTT ve Modbus TCP/IP</b> kullanarak <b>Ignition SCADA</b> katmanına bağlıyorum. Hedefim: Üretim hattını donanımdan denetim ekranına kadar şeffaf ve izlenebilir hale getirmek."
+           data-en="An end-to-end automation architecture connecting field devices with SCADA and web technologies. I link <b>CODESYS</b> control logic, validated in a Factory I/O virtual plant, to an <b>Ignition SCADA</b> layer using <b>MQTT and Modbus TCP/IP</b>. My goal: to make the production line fully traceable from the hardware to the supervisory screen.">
+          Sahadaki cihazları SCADA ve web teknolojileriyle konuşturan uçtan uca otomasyon mimarisi. Factory I/O sanal fabrikasında doğruladığım <b>CODESYS</b> kontrol mantığını; <b>MQTT ve Modbus TCP/IP</b> kullanarak <b>Ignition SCADA</b> katmanına bağlıyorum. Hedefim: Üretim hattını donanımdan denetim ekranına kadar şeffaf ve izlenebilir hale getirmek.
         </p>
         <div class="card-meta" data-tr="Kişisel proje · Devam ediyor" data-en="Personal project · Ongoing">Kişisel proje · Devam ediyor</div>
       </article>
 
+      <!-- PROJE 4: AKILLI EV -->
       <article class="card wide with-media">
         <div>
         <div class="card-tags">
@@ -736,9 +742,9 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
           <span class="tag t-set" data-tr="Proje Lideri" data-en="Project Leader">Proje Lideri</span>
         </div>
         <h3 data-tr="Akıllı Ev Otomasyonu ve Enerji Yönetimi" data-en="Smart Home Automation &amp; Energy Management">Akıllı Ev Otomasyonu ve Enerji Yönetimi</h3>
-        <p data-tr="Prof. Bernard Riera ile yürütülen, Beijer Electronics tarafından desteklenen uluslararası bir iş birliğinin <b>proje lideriyim</b>. <b>400'den fazla I/O noktasını</b> yöneten endüstriyel seviyede CODESYS mantığını yazdım ve senaryo doğrulaması için HOME I/O simülasyonuyla eşleştirdim. Arayüzü iX Developer'da ve ayrıca özel bir web platformunda tasarladım; enerji tüketimi izleme ve optimizasyonu Modbus TCP/IP ile MQTT üzerinden gerçek zamanlı yürüyor."
-           data-en="<b>Project leader</b> of an international collaboration with Prof. Bernard Riera, supported by Beijer Electronics. I implemented industrial-grade CODESYS logic managing <b>400+ I/O points</b>, interfaced with HOME I/O simulation for scenario validation. The interface was designed in iX Developer plus a custom web platform, with real-time exchange over Modbus TCP/IP and MQTT for energy consumption monitoring and optimization.">
-          Prof. Bernard Riera ile yürütülen, Beijer Electronics tarafından desteklenen uluslararası bir iş birliğinin <b>proje lideriyim</b>. <b>400'den fazla I/O noktasını</b> yöneten endüstriyel seviyede CODESYS mantığını yazdım ve senaryo doğrulaması için HOME I/O simülasyonuyla eşleştirdim. Arayüzü iX Developer'da ve ayrıca özel bir web platformunda tasarladım; enerji tüketimi izleme ve optimizasyonu Modbus TCP/IP ile MQTT üzerinden gerçek zamanlı yürüyor.
+        <p data-tr="Prof. Bernard Riera iş birliği ve Beijer Electronics desteğiyle yönettiğim proje. <b>400'den fazla I/O noktasını</b> yöneten CODESYS mimarisini yazıp <b>HOME I/O</b> simülasyonu ile doğruladım. Enerji takibi için Modbus TCP/IP ve MQTT kullanan; iX Developer panelleri ve <b>özel kodladığım web platformu</b> üzerinden anlık çalışan arayüzler geliştirdim."
+           data-en="A project I lead in collaboration with Prof. Bernard Riera and supported by Beijer Electronics. I wrote a CODESYS architecture managing <b>400+ I/O points</b>, validated via <b>HOME I/O</b> simulation. I developed real-time energy tracking interfaces running on both iX Developer panels and a <b>custom-coded web platform</b>, communicating via Modbus TCP/IP and MQTT.">
+          Prof. Bernard Riera iş birliği ve Beijer Electronics desteğiyle yönettiğim proje. <b>400'den fazla I/O noktasını</b> yöneten CODESYS mimarisini yazıp <b>HOME I/O</b> simülasyonu ile doğruladım. Enerji takibi için Modbus TCP/IP ve MQTT kullanan; iX Developer panelleri ve <b>özel kodladığım web platformu</b> üzerinden anlık çalışan arayüzler geliştirdim.
         </p>
         <div class="card-meta" data-tr="Prof. Bernard Riera iş birliği · Beijer Electronics desteğiyle · Oca. — Tem. 2026" data-en="In collaboration with Prof. Bernard Riera · Supported by Beijer Electronics · Jan. — Jul. 2026">Prof. Bernard Riera iş birliği · Beijer Electronics desteğiyle · Oca. — Tem. 2026</div>
         </div>
@@ -772,86 +778,102 @@ footer .mono{font-family:var(--mono); font-size:11.5px}
 <section id="stack">
   <div class="wrap">
     <div class="sec-head">
-      <h2 data-tr="Yetkinlikler" data-en="Stack">Yetkinlikler</h2>
-      <p data-tr="Otomasyon piramidine göre dizildi — bir aracın hangi katmanda durduğu, ne işe yaradığı kadar önemli."
-         data-en="Ordered by the automation pyramid — where a tool sits matters as much as what it does.">
-        Otomasyon piramidine göre dizildi — bir aracın hangi katmanda durduğu, ne işe yaradığı kadar önemli.
+      <h2 data-tr="Teknoloji Yığını" data-en="Tech Stack">Teknoloji Yığını</h2>
+      <p data-tr="Fiziksel dünyadan web arayüzlerine uzanan mimari: Donanım veri üretir, protokoller taşır, yazılım kontrol eder."
+         data-en="The architecture from physical world to web interfaces: Hardware generates data, protocols carry it, software controls it.">
+        Fiziksel dünyadan web arayüzlerine uzanan mimari: Donanım veri üretir, protokoller taşır, yazılım kontrol eder.
       </p>
     </div>
 
-    <div class="pyr-row">
-      <div class="pyr-wrap">
-        <div class="flow" aria-hidden="true">
-          <span class="flow-line"></span>
-          <span class="flow-dot up"></span>
-          <span class="flow-dot down"></span>
+    <div class="stack-layout">
+      
+      <!-- SOL TARAF: EKSEN VE KATMANLAR -->
+      <div class="pyramid-col">
+        
+        <!-- Eksen Çizgisi -->
+        <div class="axis" aria-hidden="true">
+          <span class="axis-dot"></span>
         </div>
-        <div class="pyr">
-        <div class="band">
-          <div class="band-name">
-            <span data-tr="Denetim seviyesi" data-en="Supervisory level">Denetim seviyesi</span>
-            <small data-tr="izleme ve operatör" data-en="monitoring &amp; operator">izleme ve operatör</small>
+
+        <div class="layers">
+          
+          <!-- ÜST KATMAN: Yazılım ve Kontrol -->
+          <div class="layer-card layer-top">
+            <div class="layer-info">
+              <h3 data-tr="Yazılım ve Kontrol" data-en="Software &amp; Control">Yazılım ve Kontrol</h3>
+              <span class="sub-text" data-tr="mantık, algoritma ve arayüz" data-en="logic, algorithms &amp; interface">mantık, algoritma ve arayüz</span>
+            </div>
+            <div class="layer-tools">
+              <span class="tool">Python</span>
+              <span class="tool">C</span>
+              <span class="tool">CODESYS</span>
+              <span class="divider"></span>
+              <span class="tool">Ignition SCADA</span>
+              <span class="tool">iX Developer</span>
+              <span class="tool">LabVIEW</span>
+            </div>
           </div>
-          <div class="chips">
-            <span class="chip">Ignition SCADA</span>
-            <span class="chip">iX Developer</span>
-            <span class="chip">LabVIEW</span>
-            <span class="chip-divider" aria-hidden="true"></span>
-            <span class="chip">OPC UA</span>
-            <span class="chip">MQTT</span>
-            <span class="chip">BACnet</span>
+
+          <!-- ORTA KATMAN: Haberleşme ve Veri Yolu -->
+          <div class="layer-card layer-mid">
+            <div class="layer-info">
+              <h3 data-tr="Haberleşme Ağı" data-en="Communication Network">Haberleşme Ağı</h3>
+              <span class="sub-text" data-tr="sistemler arası köprü" data-en="bridge between systems">sistemler arası köprü</span>
+            </div>
+            <div class="layer-tools">
+              <span class="tool">MQTT</span>
+              <span class="tool">Modbus TCP/IP</span>
+              <span class="tool">OPC UA</span>
+              <span class="divider"></span>
+              <span class="tool">EtherCAT</span>
+              <span class="tool">BACnet</span>
+              <span class="tool">UDP</span>
+              <span class="tool" data-tr="Seri Haberleşme" data-en="Serial Comm">Seri Haberleşme</span>
+            </div>
           </div>
+
+          <!-- ALT KATMAN: Donanım ve Saha -->
+          <div class="layer-card layer-base">
+            <div class="layer-info">
+              <h3 data-tr="Donanım ve Saha" data-en="Hardware &amp; Field">Donanım ve Saha</h3>
+              <span class="sub-text" data-tr="fiziksel ekipman ve tahrik" data-en="physical equipment &amp; actuation">fiziksel ekipman ve tahrik</span>
+            </div>
+            <div class="layer-tools">
+              <span class="tool" data-tr="PLC Donanımı" data-en="PLC Hardware">PLC Donanımı</span>
+              <span class="tool" data-tr="Servo Sürücüler" data-en="Servo Drives">Servo Sürücüler</span>
+              <span class="divider"></span>
+              <span class="tool">ESP32</span>
+              <span class="tool">Arduino</span>
+            </div>
+          </div>
+
         </div>
-        <div class="band">
-          <div class="band-name">
-            <span data-tr="Kontrol seviyesi" data-en="Control level">Kontrol seviyesi</span>
-            <small data-tr="mantık ve regülasyon" data-en="logic &amp; regulation">mantık ve regülasyon</small>
-          </div>
-          <div class="chips">
-            <span class="chip">CODESYS (IEC 61131-3)</span>
-            <span class="chip">Python</span>
-            <span class="chip">C</span>
-            <span class="chip-divider" aria-hidden="true"></span>
-            <span class="chip">Modbus TCP/IP</span>
-          </div>
+
+        <!-- Akış Yönü Metinleri -->
+        <div class="flow-text">
+          <span><span class="arrow">↑</span> <span data-tr="veri yazılıma çıkar" data-en="data flows to software">veri yazılıma çıkar</span></span>
+          <span><span class="arrow">↓</span> <span data-tr="komut sahaya iner" data-en="command flows down">komut sahaya iner</span></span>
         </div>
-        <div class="band">
-          <div class="band-name">
-            <span data-tr="Saha seviyesi" data-en="Field level">Saha seviyesi</span>
-            <small data-tr="donanım ve tahrik" data-en="hardware &amp; actuation">donanım ve tahrik</small>
-          </div>
-          <div class="chips">
-            <span class="chip" data-tr="PLC &amp; HMI donanımı" data-en="PLC &amp; HMI hardware">PLC &amp; HMI donanımı</span>
-            <span class="chip" data-tr="Servo sürücüler" data-en="Servo drives">Servo sürücüler</span>
-            <span class="chip">ESP32</span>
-            <span class="chip-divider" aria-hidden="true"></span>
-            <span class="chip">EtherCAT</span>
-            <span class="chip">CiA 402</span>
-          </div>
-        </div>
-      </div>
-      <p class="flow-note">
-        <span><i class="u">↑</i> <span data-tr="ölçüm yukarı çıkar" data-en="measurement flows up">ölçüm yukarı çıkar</span></span>
-        <span><i class="d">↓</i> <span data-tr="komut sahaya iner" data-en="command flows down">komut sahaya iner</span></span>
-      </p>
       </div>
 
+      <!-- SAĞ TARAF: MODELLEME DİKEY BLOK -->
       <div class="model-col">
-        <div class="band-name">
-          <span data-tr="Modelleme ve doğrulama" data-en="Modeling &amp; validation">Modelleme ve doğrulama</span>
-          <small data-tr="piramidin her katmanına paralel" data-en="parallel to every layer">piramidin her katmanına paralel</small>
-        </div>
-        <div class="chips">
-          <span class="chip">MATLAB &amp; Simulink</span>
-          <span class="chip">Factory I/O</span>
-          <span class="chip">HOME I/O</span>
-          <span class="chip">OpenCV &amp; YOLO</span>
-          <span class="chip-sep" aria-hidden="true"></span>
-          <span class="chip pid">PID / LQR</span>
+        <div class="layer-card vertical-card">
+          <div class="layer-info">
+            <h3 data-tr="Modelleme ve Doğrulama" data-en="Modeling &amp; Validation">Modelleme ve Doğrulama</h3>
+            <span class="sub-text" data-tr="tüm mimariye paralel" data-en="parallel to entire architecture">tüm mimariye paralel</span>
+          </div>
+          <div class="layer-tools stacked">
+            <span class="tool">MATLAB &amp; Simulink</span>
+            <span class="tool">Factory I/O</span>
+            <span class="tool">HOME I/O</span>
+            <span class="tool">OpenCV &amp; YOLO</span>
+            <span class="tool highlight">PID / LQR</span>
+          </div>
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
 </section>
 
